@@ -44,15 +44,14 @@ const CTRL = [
   { x: 366, y: 762, w: 178 },
   { x: 214, y: 690, w: 184 },
   { x: 118, y: 566, w: 186 }, // rising up the left
-  { x: 58, y: 402, w: 186 },
-  { x: 18, y: 216, w: 184 },
-  { x: -34, y: 8, w: 182 }, // off the top-left (recycle point)
+  { x: 40, y: 450, w: 186 },
+  { x: -150, y: 350, w: 186 }, // off the left screen edge (recycle point)
 ];
 
 // ---- Build an arc-length sampled polyline from the control points -------
 const STEPS = 22;
 
-type Sample = { x: number; y: number; w: number; cum: number };
+type Sample = { x: number; y: number; w: number; cum: number; cumU: number };
 
 function buildSamples(pts: typeof CTRL) {
   const clamp = (i: number) => pts[Math.max(0, Math.min(pts.length - 1, i))];
@@ -77,30 +76,37 @@ function buildSamples(pts: typeof CTRL) {
         y: cr(p0.y, p1.y, p2.y, p3.y),
         w: p1.w + (p2.w - p1.w) * t,
         cum: 0,
+        cumU: 0,
       });
     }
   }
   const last = pts[pts.length - 1];
-  out.push({ x: last.x, y: last.y, w: last.w, cum: 0 });
+  out.push({ x: last.x, y: last.y, w: last.w, cum: 0, cumU: 0 });
 
   let cum = 0;
+  let cumU = 0;
   for (let i = 1; i < out.length; i++) {
-    cum += Math.hypot(out[i].x - out[i - 1].x, out[i].y - out[i - 1].y);
+    const ds = Math.hypot(out[i].x - out[i - 1].x, out[i].y - out[i - 1].y);
+    cum += ds;
+    const avgW = (out[i].w + out[i - 1].w) / 2;
+    const avgScale = avgW / 150; // SHEET_H0 is 150
+    cumU += ds / avgScale;
     out[i].cum = cum;
+    out[i].cumU = cumU;
   }
-  return { samples: out, length: cum };
+  return { samples: out, length: cum, lengthU: cumU };
 }
 
-const { samples: SAMPLES, length: PATH_LEN } = buildSamples(CTRL);
+const { samples: SAMPLES, length: PATH_LEN, lengthU: PATH_U_LEN } = buildSamples(CTRL);
 
-function pointAt(s: number) {
-  const sm = ((s % PATH_LEN) + PATH_LEN) % PATH_LEN;
+function pointAt(u: number) {
+  const sm = ((u % PATH_U_LEN) + PATH_U_LEN) % PATH_U_LEN;
   let i = 1;
-  while (i < SAMPLES.length - 1 && SAMPLES[i].cum < sm) i++;
+  while (i < SAMPLES.length - 1 && SAMPLES[i].cumU < sm) i++;
   const a = SAMPLES[i - 1];
   const b = SAMPLES[i];
-  const seg = b.cum - a.cum || 1;
-  const t = (sm - a.cum) / seg;
+  const seg = b.cumU - a.cumU || 1;
+  const t = (sm - a.cumU) / seg;
   return {
     x: a.x + (b.x - a.x) * t,
     y: a.y + (b.y - a.y) * t,
@@ -112,10 +118,10 @@ function pointAt(s: number) {
 // ---- Sheet tuning -------------------------------------------------------
 const SHEET_H0 = 150; // baked sheet height (paper width at scale 1)
 const SHEET_L0 = 178; // baked sheet length (along the feed direction)
-const D = 122; // arc-length spacing -> each sheet stays distinct
+const D = 195; // uniform visual spacing (> 178 means a consistent gap everywhere)
 const FOLD_TILT = 13; // degrees; alternates +/- so sheets tent into folds
-const SPEED = 52; // arc units / second (a new photo ~every D/SPEED s)
-const N = Math.ceil(PATH_LEN / D) + 1;
+const SPEED = 45; // virtual units / second
+const N = Math.ceil(PATH_U_LEN / D) + 1;
 
 // A gallery of "retouched" prints — each sheet keeps its photo for the whole
 // journey, so the loop stays seamless while still showing a mix of images.
@@ -136,7 +142,7 @@ function sheetTransform(s: number, k: number) {
   // alternate the tilt so consecutive sheets fold against each other
   const tilt = k % 2 === 0 ? FOLD_TILT : -FOLD_TILT;
   return `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${(
-    p.ang + tilt
+    p.ang + tilt + 180
   ).toFixed(1)}) scale(${scale.toFixed(3)})`;
 }
 
@@ -149,15 +155,15 @@ export function PrinterPaperFlow() {
   const applyFrame = (flow: number) => {
     const svals: number[] = new Array(N);
     for (let k = 0; k < N; k++) {
-      const s = ((k * D + flow) % PATH_LEN + PATH_LEN) % PATH_LEN;
-      svals[k] = s;
+      const u = ((k * D + flow) % PATH_U_LEN + PATH_U_LEN) % PATH_U_LEN;
+      svals[k] = u;
       const el = sheetRefs.current[k];
       if (!el) continue;
-      el.setAttribute("transform", sheetTransform(s, k));
+      el.setAttribute("transform", sheetTransform(u, k));
       // fade in as it emerges from the slot so the wrap is invisible
-      el.style.opacity = String(Math.min(1, s / 55));
+      el.style.opacity = String(Math.min(1, u / 55));
     }
-    // paint order: furthest along the path (largest s) at the back, the sheet
+    // paint order: furthest along the path (largest u) at the back, the sheet
     // nearest the printer on top -> newest print sits on the stack.
     const order = [...Array(N).keys()].sort((a, b) => svals[b] - svals[a]);
     const key = order.join(",");
@@ -253,7 +259,7 @@ export function PrinterPaperFlow() {
                 ref={(el) => {
                   sheetRefs.current[k] = el;
                 }}
-                transform={sheetTransform((k * D) % PATH_LEN, k)}
+                transform={sheetTransform((k * D) % PATH_U_LEN, k)}
                 filter="url(#ppf-drop)"
               >
                 {/* the printed photo */}
