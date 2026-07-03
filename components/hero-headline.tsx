@@ -14,17 +14,18 @@ export function HeroHeadline({ isReady }: { isReady: boolean }) {
     const subhead = containerRef.current.querySelector(".subhead-fade");
 
     if (isReducedMotion()) {
-      gsap.set(strips, { yPercent: 0 });
+      gsap.set(strips, { y: 0, autoAlpha: 1 });
       gsap.set(subhead, { autoAlpha: 1, y: 0 });
       return;
     }
 
-    gsap.set(strips, { yPercent: 100 });
+    gsap.set(strips, { y: 60, autoAlpha: 0 });
     gsap.set(subhead, { autoAlpha: 0, y: 20 });
 
     const tl = gsap.timeline();
     tl.to(strips, {
-      yPercent: 0,
+      y: 0,
+      autoAlpha: 1,
       duration: 1.2,
       ease: MO_CONFIG.ease.heavy,
       stagger: 0.1,
@@ -44,23 +45,23 @@ export function HeroHeadline({ isReady }: { isReady: boolean }) {
       className="absolute z-10 flex flex-col justify-center pl-[2%]"
       style={{ left: '52%', width: '22%', top: '35%', height: '15%' }}
     >
-      <div className="relative flex items-center font-bebas text-bone overflow-hidden">
+      <div className="relative flex items-center font-bebas text-bone">
         {/* The large '30' */}
-        <div className="overflow-hidden">
-          <div className="headline-strip-inner text-accent text-[7rem] md:text-[11rem] leading-[0.85] pr-3 tracking-tighter">
+        <div>
+          <div className="headline-strip-inner text-accent text-[7rem] md:text-[11rem] leading-none pr-3 tracking-tighter">
             30
           </div>
         </div>
         
         {/* 'YEARS EXPERTS' stacked */}
         <div className="flex flex-col justify-center">
-          <div className="overflow-hidden">
-            <div className="headline-strip-inner text-[2.5rem] md:text-[4rem] leading-[0.85] tracking-wider">
+          <div>
+            <div className="headline-strip-inner text-[2.5rem] md:text-[4rem] leading-none tracking-wider">
               YEARS
             </div>
           </div>
-          <div className="overflow-hidden mt-1">
-            <div className="headline-strip-inner text-[2.5rem] md:text-[4rem] leading-[0.85] tracking-wider">
+          <div>
+            <div className="headline-strip-inner text-[2.5rem] md:text-[4rem] leading-none tracking-wider mt-1">
               EXPERTS
             </div>
           </div>

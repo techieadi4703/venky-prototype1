@@ -10,9 +10,9 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
 
   // H-lines (in %)
   const h1 = 12; // Below Header
-  const h2 = 35; // Above Headline
-  const h3 = 50; // Below Headline, Above CTA
-  const h4 = 60; // Below CTA
+  const h2 = 32; // Above Headline
+  const h3 = 54; // Below Headline, Above CTA
+  const h4 = 66; // Below CTA
   const h5 = 85; // Bottom
 
   useEffect(() => {

@@ -35,14 +35,14 @@ const PRINTER_H = PRINTER.w / PRINTER_ASPECT;
 // { x, y, w } — w is the paper width (grows as it comes toward the viewer).
 const CTRL = [
   { x: 1262, y: 604, w: 58 }, // inside the slot
-  { x: 1180, y: 660, w: 70 }, // emerging down-left, growing faster
-  { x: 1050, y: 730, w: 90 }, 
-  { x: 880, y: 790, w: 120 }, 
-  { x: 650, y: 830, w: 160 }, 
-  { x: 400, y: 810, w: 200 }, 
-  { x: 150, y: 750, w: 250 }, 
-  { x: -100, y: 600, w: 310 }, 
-  { x: -350, y: 350, w: 380 }, 
+  { x: 1180, y: 630, w: 70 }, // emerging down-left, shallower drop
+  { x: 1050, y: 670, w: 90 }, 
+  { x: 880, y: 710, w: 120 }, 
+  { x: 650, y: 740, w: 160 }, 
+  { x: 400, y: 720, w: 200 }, 
+  { x: 150, y: 650, w: 250 }, 
+  { x: -100, y: 500, w: 310 }, 
+  { x: -350, y: 250, w: 380 }, 
 ];
 
 // ---- Build an arc-length sampled polyline from the control points -------
