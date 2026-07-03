@@ -42,39 +42,54 @@ export function GetYourImagination() {
   }, []);
 
   const polaroids = [
-    { src: "/images/hero-ribbon-photo.png", rotation: -15, yOffset: 20 },
-    { src: "/images/portrait-man.png", rotation: 10, yOffset: -10 },
-    { src: "/images/portrait-woman.png", rotation: -5, yOffset: 10 },
-    { src: "/images/portrait-man.png", rotation: 15, yOffset: -5 },
-    { src: "/images/hero-ribbon-photo.png", rotation: -20, yOffset: 15 },
-    { src: "/images/portrait-woman.png", rotation: 25, yOffset: -20 },
+    { src: "/images/jewelry_necklace.png", rotation: -20, yOffset: 10 },
+    { src: "/images/hero-ribbon-photo.png", rotation: -12, yOffset: 30 },
+    { src: "/images/watches_product.png", rotation: 15, yOffset: 45 },
+    { src: "/images/scooter_vehicle.png", rotation: 22, yOffset: 5 },
+    { src: "/images/portrait-man.png", rotation: -15, yOffset: 25 },
+    { src: "/images/portrait-woman.png", rotation: -25, yOffset: 40 },
+    { src: "/images/woman_saree.png", rotation: -18, yOffset: -10 },
   ];
 
   return (
-    <section className="relative min-h-[600px] w-full flex flex-col bg-[#010101] py-24 overflow-hidden" ref={containerRef}>
+    <section className="relative min-h-[80vh] w-full flex flex-col items-center justify-center bg-[#050607] py-16 overflow-hidden" ref={containerRef}>
       
-      <div className="flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto px-4 md:px-12 relative z-10">
+      <div className="flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
         
-        {/* Main Text Block */}
-        <div className="relative mb-24 w-full flex justify-center">
-          {/* Repeating background text */}
-          <div className="absolute inset-0 flex flex-wrap overflow-hidden opacity-30 select-none items-center justify-center w-full max-w-[900px] mx-auto mask-image-fade">
-            <p className="text-[#516e7b] font-bebas text-[10px] md:text-sm leading-none tracking-widest break-all text-justify">
-              {Array(40).fill("GET YOUR IMAGINATION ").join("")}
-            </p>
+        {/* Main Text Block (No external background grid, mask only) */}
+        <div className="relative mb-6 md:mb-10 w-full flex justify-center">
+          <div className="relative font-bebas text-[clamp(3rem,10.5vw,12rem)] leading-none tracking-tight uppercase text-center font-bold isolate">
+            
+            {/* Layer 1: Main Solid Text (Large overlaid letters - Slate blue-gray) */}
+            <div className="relative text-[#5D7686] z-10">
+              GET YOUR IMAGINATION
+            </div>
+            
+            {/* Layer 2: Shadow Overlay (Near-black text clipped inside the letters) */}
+            <div 
+              className="absolute inset-0 pointer-events-none select-none z-20"
+              style={{
+                WebkitTextFillColor: 'transparent',
+                WebkitBackgroundClip: 'text',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='16'%3E%3Ctext x='0' y='12' fill='%230B0F11' font-family='Bebas Neue, sans-serif' font-size='12' letter-spacing='2px' opacity='1'%3EGET YOUR IMAGINATION GET YOUR IMAGINATION GET YOUR IMAGINATION%3C/text%3E%3C/svg%3E")`,
+                backgroundRepeat: 'repeat',
+                backgroundPosition: 'center center',
+                color: 'transparent'
+              }}
+              aria-hidden="true"
+            >
+              GET YOUR IMAGINATION
+            </div>
+            
           </div>
-          
-          <h1 className="relative font-bebas text-[#516e7b] text-6xl md:text-[8rem] lg:text-[10rem] leading-none tracking-tight uppercase z-10 mix-blend-screen text-center">
-            Get Your Imagination
-          </h1>
         </div>
 
-        {/* Polaroids */}
-        <div className="relative w-full max-w-5xl mx-auto flex justify-between items-center gap-2 md:gap-4 px-8 mt-12">
+        {/* Polaroids (No border, tight gaps) */}
+        <div className="relative w-full max-w-[1400px] mx-auto flex justify-center items-center gap-2 md:gap-4 px-4">
           {polaroids.map((p, i) => (
             <div 
               key={i} 
-              className="polaroid relative w-[12%] aspect-square bg-white p-1 md:p-2 shadow-2xl hover:scale-110 transition-transform duration-300 z-10"
+              className="polaroid relative w-[12%] aspect-square hover:scale-110 transition-transform duration-300 z-10"
               style={{ 
                 transform: `rotate(${p.rotation}deg) translateY(${p.yOffset}px)`,
                 boxShadow: "0 20px 40px rgba(0,0,0,0.5)"
@@ -85,18 +100,23 @@ export function GetYourImagination() {
                   src={p.src} 
                   alt="Portfolio snippet" 
                   fill 
-                  className="object-cover grayscale hover:grayscale-0 transition-all duration-500" 
+                  className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  style={{ filter: 'grayscale(100%)' }}
                 />
               </div>
               
               {/* Sparkles on the last polaroid */}
-              {i === 5 && (
+              {i === 6 && (
                 <>
-                  <div className="spark absolute -top-8 -left-4 w-1 h-6 bg-[#516e7b] rounded-full transform -rotate-45 origin-bottom"></div>
-                  <div className="spark absolute -top-10 left-4 w-1 h-8 bg-[#516e7b] rounded-full transform -rotate-12 origin-bottom"></div>
-                  <div className="spark absolute -top-6 left-12 w-1 h-6 bg-[#516e7b] rounded-full transform rotate-45 origin-bottom"></div>
-                  <div className="spark absolute -bottom-6 -left-2 w-1 h-6 bg-[#516e7b] rounded-full transform -rotate-45 origin-top"></div>
-                  <div className="spark absolute -bottom-8 left-6 w-1 h-6 bg-[#516e7b] rounded-full transform rotate-12 origin-top"></div>
+                  {/* Top Right Sparkles */}
+                  <div className="spark absolute -top-6 right-6 w-[6px] h-6 bg-[#516e7b] origin-bottom" style={{ clipPath: "polygon(0 0, 100% 0, 70% 100%, 30% 100%)", transform: "rotate(-30deg)" }}></div>
+                  <div className="spark absolute -top-10 right-0 w-[8px] h-10 bg-[#516e7b] origin-bottom" style={{ clipPath: "polygon(0 0, 100% 0, 70% 100%, 30% 100%)", transform: "rotate(15deg)" }}></div>
+                  <div className="spark absolute -top-6 -right-6 w-[6px] h-6 bg-[#516e7b] origin-bottom" style={{ clipPath: "polygon(0 0, 100% 0, 70% 100%, 30% 100%)", transform: "rotate(60deg)" }}></div>
+                  
+                  {/* Bottom Left Sparkles */}
+                  <div className="spark absolute -bottom-6 left-6 w-[6px] h-6 bg-[#516e7b] origin-top" style={{ clipPath: "polygon(30% 0, 70% 0, 100% 100%, 0 100%)", transform: "rotate(-30deg)" }}></div>
+                  <div className="spark absolute -bottom-10 left-0 w-[8px] h-10 bg-[#516e7b] origin-top" style={{ clipPath: "polygon(30% 0, 70% 0, 100% 100%, 0 100%)", transform: "rotate(15deg)" }}></div>
+                  <div className="spark absolute -bottom-6 -left-6 w-[6px] h-6 bg-[#516e7b] origin-top" style={{ clipPath: "polygon(30% 0, 70% 0, 100% 100%, 0 100%)", transform: "rotate(60deg)" }}></div>
                 </>
               )}
             </div>
