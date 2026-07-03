@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { GridOverlay } from "@/components/grid-overlay";
 import { HeroHeadline } from "@/components/hero-headline";
-import { PrinterFeed } from "@/components/printer-feed";
 import { CtaButton } from "@/components/cta-button";
+import { PaperManager } from "@/components/printer/PaperManager";
 
 export default function Home() {
   const [gridDrawn, setGridDrawn] = useState(false);
@@ -21,7 +21,7 @@ export default function Home() {
       <CtaButton isReady={gridDrawn} />
 
       {/* 4. Ambient continuous printer ribbon loops */}
-      <PrinterFeed />
+      <PaperManager />
     </div>
   );
 }
