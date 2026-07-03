@@ -5,13 +5,13 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const NODES = [
-  { id: "client-brief", label: "Client Brief", x: 10, y: 25, isPill: true },
-  { id: "internal-brief", label: "Internal Brief", x: 35, y: 25, isPill: false },
-  { id: "estimation", label: "Estimation", x: 60, y: 25, isPill: false },
-  { id: "retouching", label: "Retouching/Adapting", x: 85, y: 25, isPill: false },
-  { id: "internal-approval", label: "Internal Approval/Quality Check", x: 85, y: 75, isPill: false },
-  { id: "correction", label: "Correction", x: 60, y: 75, isPill: false },
-  { id: "client-approval", label: "Client Approval", x: 35, y: 75, isPill: false },
+  { id: "client-brief", label: "client brief", x: 150, y: 200, isPill: true },
+  { id: "internal-brief", label: "internal brief", x: 250, y: 100, isPill: false },
+  { id: "estimation", label: "estimation", x: 525, y: 100, isPill: false },
+  { id: "retouching", label: "retouching/adapting", x: 800, y: 100, isPill: false },
+  { id: "internal-approval", label: "internal approval/quality check", x: 800, y: 300, isPill: false },
+  { id: "correction", label: "correction", x: 525, y: 300, isPill: false },
+  { id: "client-approval", label: "client approval", x: 250, y: 300, isPill: false },
 ];
 
 export function OurProcess() {
@@ -44,35 +44,47 @@ export function OurProcess() {
   }, { scope: containerRef });
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-[max(6vw,24px)] md:px-[min(6vw,96px)] py-24 z-10 relative">
-      <div className="flex flex-col mb-16">
-        <h2 className="font-bebas text-accent text-4xl md:text-[2.5rem] tracking-wide mb-4 uppercase">
-          Our Process
+    <section className="w-full max-w-[1440px] mx-auto px-4 md:px-12 py-24 z-10 relative bg-ink">
+      <div className="flex flex-col mb-16 items-center">
+        <h2 className="font-bebas text-accent text-4xl md:text-[3rem] tracking-wide mb-4 uppercase">
+          OUR PROCESS
         </h2>
       </div>
 
-      <div ref={containerRef} className="relative w-full aspect-[4/3] md:aspect-[2.5/1]">
+      <div ref={containerRef} className="relative w-full aspect-[2/1] md:aspect-[2.5/1] max-w-5xl mx-auto">
         
-        {/* SVG Track */}
+        {/* SVG Track and Connector Lines */}
         <svg 
           className="absolute inset-0 w-full h-full pointer-events-none" 
-          viewBox="0 0 100 100" 
-          preserveAspectRatio="none"
+          viewBox="0 0 1000 400" 
+          preserveAspectRatio="xMidYMid meet"
         >
-          {/* Path linking all nodes in a loop */}
+          {/* Main Track */}
           <path 
             className="process-track"
-            d="M 10 25 L 85 25 A 15 25 0 0 1 85 75 L 35 75 A 15 25 0 0 1 10 25 Z" 
+            d="M 150 200 A 100 100 0 0 1 250 100 L 800 100 A 100 100 0 0 1 800 300 L 250 300" 
             fill="none" 
-            stroke="var(--color-node-line)" 
-            strokeWidth="0.5" 
+            stroke="#4A4A4A" 
+            strokeWidth="2" 
             strokeDasharray="4000"
-            vectorEffect="non-scaling-stroke"
           />
+
+          {/* Vertical Connectors */}
+          {NODES.map((node) => (
+            <line 
+              key={`line-${node.id}`}
+              x1={node.x} 
+              y1={node.y} 
+              x2={node.x} 
+              y2={node.y + 40} 
+              stroke="#4A4A4A" 
+              strokeWidth="2"
+            />
+          ))}
         </svg>
 
-        {/* Nodes */}
-        {NODES.map((node, i) => {
+        {/* Nodes and Labels */}
+        {NODES.map((node) => {
           const isHovered = hoveredNode === node.id;
           
           return (
@@ -80,33 +92,40 @@ export function OurProcess() {
               key={node.id}
               className="process-node absolute flex flex-col items-center group cursor-pointer"
               style={{
-                left: `${node.x}%`,
-                top: `${node.y}%`,
+                left: `${(node.x / 1000) * 100}%`,
+                top: `${(node.y / 400) * 100}%`,
                 transform: "translate(-50%, -50%)",
                 zIndex: isHovered ? 20 : 10
               }}
               onMouseEnter={() => setHoveredNode(node.id)}
               onMouseLeave={() => setHoveredNode(null)}
             >
-              {/* Circle/Pill */}
+              {/* Expanding Circle / Pill */}
               <div 
-                className={`flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
-                  isHovered ? "bg-accent scale-150" : "bg-node-inactive scale-100"
-                } ${node.isPill ? "w-20 md:w-32 h-10 md:h-12 rounded-full" : "w-10 md:w-12 h-10 md:h-12 rounded-full"}`}
+                className={`flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] overflow-hidden shadow-lg ${
+                  isHovered ? "bg-accent scale-[3]" : "bg-[#4A4A4A] scale-100"
+                } ${node.isPill ? (isHovered ? "w-10 h-10 rounded-full" : "w-16 h-8 rounded-full") : "w-8 h-8 rounded-full"}`}
               >
-                {/* Placeholder Icon */}
-                <span className={`font-bebas transition-opacity duration-300 text-ink ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}>
-                  {node.isPill ? "BRIEF" : i}
-                </span>
+                {/* Illustration (Visible on hover) */}
+                <div 
+                  className={`relative w-full h-full transition-opacity duration-300 delay-100 ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <img 
+                    src="/images/hero-ribbon-photo.png" 
+                    alt={node.label}
+                    className="w-full h-full object-cover mix-blend-multiply opacity-50"
+                  />
+                </div>
               </div>
 
-              {/* Label (absolute so it doesn't move when node scales) */}
-              <div className="absolute top-full mt-4 md:mt-6 w-32 md:w-48 text-center pointer-events-none">
-                <span className={`font-bebas text-sm md:text-base leading-[1.2] tracking-wide transition-colors ${
-                  isHovered ? "text-bone" : "text-rose"
-                }`}>
+              {/* Label */}
+              <div 
+                className="absolute text-center pointer-events-none w-48"
+                style={{ top: '60px' }} // 40px for line + 20px padding
+              >
+                <span className="font-bebas text-[#7C93A3] text-sm md:text-lg tracking-widest uppercase opacity-80">
                   {node.label}
                 </span>
               </div>

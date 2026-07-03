@@ -1,8 +1,11 @@
+"use client";
+
+import { WorkCarousel } from "@/components/work-carousel";
+
 export default function WorkPage() {
   return (
-    <div className="min-h-screen pt-32 px-6 md:px-24">
-      <h1 className="text-4xl text-bone font-bebas">Our Work</h1>
-      <p className="text-rose mt-4">Coming soon.</p>
+    <div className="relative min-h-[720px] h-screen w-full flex flex-col">
+      <WorkCarousel />
     </div>
   );
 }

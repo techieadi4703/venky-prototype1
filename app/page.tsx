@@ -32,7 +32,6 @@ export default function Home() {
 
       {/* --- PHASE 2 SECTIONS --- */}
       <WhyChooseUs />
-      <WorkPreviewStrip />
       <OurServices />
       <OurProcess />
     </div>

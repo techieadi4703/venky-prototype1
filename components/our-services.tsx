@@ -34,38 +34,92 @@ export function OurServices() {
   };
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-[max(6vw,24px)] md:px-[min(6vw,96px)] py-24 z-10 relative">
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-12 lg:gap-24">
+    <section className="w-full max-w-[1440px] mx-auto px-[max(6vw,24px)] md:px-[min(6vw,96px)] py-24 z-10 relative bg-ink">
+      <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-16 lg:gap-32">
         
         {/* Left Side: Folder Panel */}
-        <div className="flex-1 w-full max-w-2xl relative">
+        <div className="flex-1 w-full max-w-lg relative mt-12">
           
-          {/* Decorative Tabs */}
-          <div className="flex gap-2 mb-[-1px] ml-4 relative z-0">
-            {[1, 2].map((tab) => (
-              <div 
-                key={tab} 
-                className="w-16 h-8 bg-folder-face rounded-t-lg border-t border-x border-folder-outline/50 flex items-center justify-center"
-              >
-                <span className="text-folder-outline text-xs">×</span>
-              </div>
-            ))}
-          </div>
+          {/* Folder Body (SVG) */}
+          <div className="relative z-10 w-full aspect-[1.4] drop-shadow-2xl">
+            <svg viewBox="0 0 600 420" className="w-full h-full overflow-visible" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#2F2F2F" />
+                  <stop offset="100%" stopColor="#1B1B1B" />
+                </linearGradient>
+                <linearGradient id="backTabGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#222222" />
+                  <stop offset="100%" stopColor="#161616" />
+                </linearGradient>
+              </defs>
 
-          {/* Folder Body (3D effect) */}
-          <div 
-            className="relative z-10 w-full min-h-[400px] p-8 md:p-12 flex flex-col bg-folder-face border border-folder-outline/30 rounded-lg rounded-tl-none shadow-2xl"
-            style={{
-              boxShadow: "inset 0 2px 0 0 var(--folder-edge), 12px 16px 24px -4px rgba(0,0,0,0.5)",
-              background: "linear-gradient(180deg, var(--folder-edge) 0%, var(--folder-face) 10%, var(--folder-face) 100%)"
-            }}
-          >
-            <h3 className="font-bebas text-accent text-3xl md:text-5xl tracking-wide mb-6">
-              {SERVICES[activeIndex].name}
-            </h3>
-            <p className="font-bebas text-bone text-lg md:text-xl leading-[1.45] tracking-[0.02em] max-w-md">
-              {SERVICES[activeIndex].desc}
-            </p>
+              {/* Left Tab (Background) */}
+              <path 
+                d="M 170 40 L 210 0 L 290 0 L 330 40 Z" 
+                fill="url(#backTabGrad)" 
+              />
+              <path 
+                d="M 170 40 L 210 0 L 290 0 L 320 30" 
+                fill="none" 
+                stroke="rgba(255,255,255,0.08)" 
+                strokeWidth="2" 
+                strokeLinecap="round"
+                strokeLinejoin="round" 
+              />
+              {/* Left Tab Cross */}
+              <g stroke="#000" strokeWidth="2.5" opacity="0.6" strokeLinecap="round">
+                <line x1="245" y1="15" x2="255" y2="25" />
+                <line x1="255" y1="15" x2="245" y2="25" />
+              </g>
+
+              {/* Right Tab + Folder Body (Foreground) */}
+              <path 
+                d="M 0 60 
+                   Q 0 40 20 40 
+                   L 260 40 
+                   L 300 0 
+                   L 390 0 
+                   L 430 40 
+                   L 530 40 
+                   L 580 90 
+                   L 580 400 
+                   Q 580 420 560 420 
+                   L 20 420 
+                   Q 0 420 0 400 
+                   Z" 
+                fill="url(#folderGrad)" 
+                stroke="#111"
+                strokeWidth="2"
+                strokeLinejoin="round"
+              />
+
+              {/* Top Highlight Bevel */}
+              <path 
+                d="M 5 60 Q 5 42 20 42 L 259 42 L 299 2 L 391 2 L 431 42 L 529 42 L 578 91" 
+                fill="none" 
+                stroke="rgba(255,255,255,0.12)" 
+                strokeWidth="2.5" 
+                strokeLinecap="round"
+                strokeLinejoin="round" 
+              />
+
+              {/* Right Tab Cross */}
+              <g stroke="#000" strokeWidth="2.5" opacity="0.6" strokeLinecap="round">
+                <line x1="340" y1="15" x2="350" y2="25" />
+                <line x1="350" y1="15" x2="340" y2="25" />
+              </g>
+            </svg>
+
+            {/* Folder Text Overlay */}
+            <div className="absolute inset-0 pt-10 flex flex-col items-center justify-center pointer-events-none">
+              <h3 className="font-bebas text-[#7C93A3] text-4xl md:text-[3.5rem] tracking-[0.1em] text-center opacity-90 drop-shadow-lg">
+                {SERVICES[activeIndex].name === "PRE-PRESS" || SERVICES[activeIndex].name === "PRINTING" || SERVICES[activeIndex].name === "PHOTO EDITING" ? "OUR SERVICES" : SERVICES[activeIndex].name}
+              </h3>
+              <p className="sr-only">
+                {SERVICES[activeIndex].desc}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -73,19 +127,19 @@ export function OurServices() {
         <div className="flex flex-col items-center justify-center shrink-0 w-full md:w-64 pt-8 md:pt-16">
           <button 
             onClick={handleUp}
-            className="text-rose hover:text-accent transition-colors p-4 focus-visible:outline-accent"
+            className="text-folder-outline hover:text-bone transition-colors p-4 focus-visible:outline-accent"
             aria-label="Previous service"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
-              <path d="M18 15L12 9L6 15" />
+            <svg width="32" height="24" viewBox="0 0 32 24" fill="none" stroke="currentColor" strokeWidth="1">
+              <path d="M16 2L30 22H2Z" />
             </svg>
           </button>
 
-          <div className="relative h-[120px] overflow-hidden w-full mask-image-y">
+          <div className="relative h-[200px] overflow-hidden w-full mask-image-y my-4">
             <div 
-              className="absolute top-0 left-0 w-full flex flex-col transition-transform duration-300 ease-in-out"
+              className="absolute top-0 left-0 w-full flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
               style={{
-                transform: `translateY(calc(40px - ${activeIndex * 40}px))`
+                transform: `translateY(calc(80px - ${activeIndex * 60}px))`
               }}
             >
               {SERVICES.map((srv, idx) => {
@@ -94,8 +148,8 @@ export function OurServices() {
                   <button
                     key={srv.id}
                     onClick={() => setActiveIndex(idx)}
-                    className={`h-[40px] flex items-center justify-center font-bebas text-xl md:text-2xl tracking-[0.1em] transition-all duration-300 ${
-                      isActive ? "text-accent scale-110" : "text-rose opacity-50 hover:opacity-100 hover:text-accent"
+                    className={`h-[60px] flex items-center justify-center font-bebas text-2xl md:text-4xl tracking-[0.05em] transition-all duration-300 ${
+                      isActive ? "text-bone" : "text-folder-outline opacity-60 hover:opacity-100 hover:text-bone"
                     }`}
                   >
                     {srv.name}
@@ -107,11 +161,11 @@ export function OurServices() {
 
           <button 
             onClick={handleDown}
-            className="text-rose hover:text-accent transition-colors p-4 focus-visible:outline-accent"
+            className="text-folder-outline hover:text-bone transition-colors p-4 focus-visible:outline-accent"
             aria-label="Next service"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
-              <path d="M6 9L12 15L18 9" />
+            <svg width="32" height="24" viewBox="0 0 32 24" fill="none" stroke="currentColor" strokeWidth="1">
+              <path d="M16 22L2 2H30Z" />
             </svg>
           </button>
         </div>
@@ -120,8 +174,8 @@ export function OurServices() {
 
       <style jsx>{`
         .mask-image-y {
-          mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-          -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, black 40%, black 60%, transparent);
+          -webkit-mask-image: linear-gradient(to bottom, transparent, black 40%, black 60%, transparent);
         }
       `}</style>
     </section>
