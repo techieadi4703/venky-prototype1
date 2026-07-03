@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useAnimationFrame, useReducedMotion } from "framer-motion";
+import { useAnimationFrame, useReducedMotion } from "motion/react";
 
 /**
  * PrinterPaperFlow

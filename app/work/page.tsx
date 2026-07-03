@@ -7,7 +7,7 @@ export default function WorkPage() {
   return (
     <div className="relative min-h-[720px] w-full flex flex-col bg-ink">
       <WorkCarousel />
-      <GetYourImagination />
+      {/* <GetYourImagination /> */}
     </div>
   );
 }
