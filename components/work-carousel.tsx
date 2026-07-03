@@ -13,10 +13,17 @@ const CASE_STUDIES = [
   },
   {
     id: 2,
-    before: "/images/hero-ribbon-photo.png",
-    after: "/images/hero-ribbon-photo.png",
+    before: "/images/portrait-man.png",
+    after: "/images/portrait-man.png",
     title: "LOREM IPSUM 2",
     desc: "Another example of our high quality retouching work. Bringing out the details and color accuracy to meet the highest industry standards.",
+  },
+  {
+    id: 3,
+    before: "/images/portrait-woman.png",
+    after: "/images/portrait-woman.png",
+    title: "LOREM IPSUM 3",
+    desc: "Flawless skin retouching and dramatic lighting enhancement to create the perfect studio portrait look for commercial applications.",
   }
 ];
 
@@ -36,16 +43,25 @@ export function WorkCarousel() {
   return (
     <section className="relative w-full h-screen overflow-hidden flex items-center justify-center">
       
+      {/* SVG Filter for Distorted Ripple Glass Effect */}
+      <svg className="hidden">
+        <defs>
+          <filter id="glass-ripple">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="40" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+
       {/* Background (Glass Texture Effect) */}
       <div 
-        className="absolute inset-0 z-0 bg-ink"
+        className="absolute inset-0 z-0 bg-ink transition-all duration-700"
         style={{
-          // Faking a rippled glass effect with a CSS filter on a blurred placeholder
-          backgroundImage: "url('/images/hero-ribbon-photo.png')",
+          backgroundImage: `url('${activeStudy.after}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "blur(20px) contrast(1.2) brightness(0.6)",
-          transform: "scale(1.1)", // Prevent blur edges from showing
+          filter: "url(#glass-ripple) blur(15px) contrast(1.3) brightness(0.5)",
+          transform: "scale(1.15)", // Prevent edges from showing
         }}
       />
       {/* 50% Black Tint Overlay */}
