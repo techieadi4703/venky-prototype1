@@ -28,16 +28,16 @@ const VB_W = 1440;
 const VB_H = 900;
 
 const PRINTER_ASPECT = 2142 / 2016;
-const PRINTER = { w: 360, x: 1120, y: 360 };
+const PRINTER = { w: 306, x: 1088, y: 374 };
 const PRINTER_H = PRINTER.w / PRINTER_ASPECT;
 
 // Drape path control points, right (printer slot) -> left/up (off screen).
 // { x, y, w } — w is the paper width (grows as it comes toward the viewer).
 const CTRL = [
-  { x: 1322, y: 632, w: 62 }, // at the front output slot (spawn point)
-  { x: 1282, y: 676, w: 76 }, // sliding out onto the tray
-  { x: 1200, y: 716, w: 94 }, // tipping down off the tray
-  { x: 1100, y: 758, w: 112 },
+  { x: 1262, y: 604, w: 58 }, // at the front output slot (spawn point)
+  { x: 1222, y: 646, w: 74 }, // sliding out onto the tray
+  { x: 1150, y: 690, w: 92 }, // tipping down off the tray
+  { x: 1080, y: 752, w: 112 },
   { x: 940, y: 800, w: 132 }, // bottom sweep begins
   { x: 748, y: 814, w: 150 },
   { x: 552, y: 802, w: 166 },
@@ -224,20 +224,18 @@ export function PrinterPaperFlow() {
           preserveAspectRatio="xMidYMid meet"
         />
 
-        {/* teal "GET YOUR IMAGINATION" stack loaded in the rear feed tray */}
+        {/* teal "GET YOUR IMAGINATION" sheet standing in the rear feed tray */}
         <g>
-          <rect x={1237} y={378} width={150} height={128} fill="var(--color-accent)" />
+          <rect x={1147} y={312} width={188} height={196} fill="var(--color-accent)" />
           {Array.from({ length: QUEUE_LINES }).map((_, i) => (
             <text
               key={i}
-              x={1245}
-              y={396 + i * 15}
-              fontFamily="var(--font-bebas), sans-serif"
-              fontSize={12}
-              letterSpacing={0.3}
+              x={1156}
+              y={346 + i * 20}
+              fontFamily="var(--font-anton), sans-serif"
+              fontSize={21}
+              letterSpacing={-0.2}
               fill="#050607"
-              fontWeight={700}
-              opacity={1 - i * 0.03}
             >
               GET YOUR IMAGINATION
             </text>

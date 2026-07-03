@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { GetYourImagination } from "@/components/get-your-imagination";
 
 export default function AboutPage() {
   const vLines = ["16%", "52%", "70%", "83%", "95%"];
@@ -9,6 +10,7 @@ export default function AboutPage() {
   const H2 = 800;
 
   return (
+    <>
     <div className="relative min-h-[1000px] h-screen w-full flex flex-col bg-ink pt-24 overflow-hidden">
       {/* Grid Lines Overlay */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
@@ -64,5 +66,8 @@ export default function AboutPage() {
 
       </div>
     </div>
+
+    <GetYourImagination />
+    </>
   );
 }
