@@ -30,48 +30,80 @@ export function SiteHeader() {
         scrolled ? "bg-ink" : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 h-24 flex items-center justify-between">
-        <Link 
-          href="/" 
-          className="flex flex-col items-end focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
-        >
-          <span className="text-logo-grey font-oswald font-bold text-4xl md:text-[2.75rem] leading-none tracking-tight">
-            Healing Tool
-          </span>
-          <span className="text-logo-grey/80 font-oswald font-light text-sm md:text-[0.9rem] leading-none mt-1 tracking-wide">
-            Get your imagination
-          </span>
-        </Link>
+      <div className="relative w-full max-w-[1440px] mx-auto h-24 flex items-center">
+        
+        {/* Logo (Right-aligned against the 16% line) */}
+        <div className="absolute top-0 left-0 h-full flex items-center justify-end pr-4 md:pr-8" style={{ width: '16%' }}>
+          <Link 
+            href="/" 
+            className="flex flex-col items-end focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+          >
+            <span className="text-logo-grey font-oswald font-bold text-4xl md:text-[2.75rem] leading-none tracking-tight">
+              Healing Tool
+            </span>
+            <span className="text-logo-grey/80 font-oswald font-light text-sm md:text-[0.9rem] leading-none mt-1 tracking-wide">
+              Get your imagination
+            </span>
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8 lg:gap-12">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 ${
-                  isActive ? "text-accent" : "text-rose hover:text-accent"
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
+        <nav className="hidden md:block absolute inset-0 w-full h-full pointer-events-none">
+          
+          {/* Column 2 (52%): HOME and ABOUT US */}
+          <div className="absolute top-1/2 -translate-y-1/2 flex items-center gap-12 pointer-events-auto" style={{ left: 'calc(52% + 16px)' }}>
+            <Link
+              href="/"
+              className={`font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out ${
+                pathname === "/" ? "text-accent" : "text-rose hover:text-accent"
+              }`}
+            >
+              HOME
+            </Link>
+            <Link
+              href="/about"
+              className={`font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out ${
+                pathname === "/about" ? "text-accent" : "text-rose hover:text-accent"
+              }`}
+            >
+              ABOUT US
+            </Link>
+          </div>
+
+          {/* Column 3 (70%): OUR WORK */}
+          <Link
+            href="/work"
+            className={`absolute top-1/2 -translate-y-1/2 font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out pointer-events-auto ${
+              pathname === "/work" ? "text-accent" : "text-rose hover:text-accent"
+            }`}
+            style={{ left: 'calc(70% + 16px)' }}
+          >
+            OUR WORK
+          </Link>
+
+          {/* Column 4 (83%): CONTACT US */}
+          <Link
+            href="/contact"
+            className={`absolute top-1/2 -translate-y-1/2 font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out pointer-events-auto ${
+              pathname === "/contact" ? "text-accent" : "text-rose hover:text-accent"
+            }`}
+            style={{ left: 'calc(83% + 16px)' }}
+          >
+            CONTACT US
+          </Link>
         </nav>
 
-        {/* Mobile Hamburger */}
-        <button
-          className="md:hidden text-rose focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-          aria-expanded={mobileMenuOpen}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
-            <path d={mobileMenuOpen ? "M18 6L6 18M6 6l12 12" : "M4 8h16M4 16h16"} />
-          </svg>
-        </button>
+        {/* Mobile Hamburger (Right aligned) */}
+        <div className="md:hidden absolute top-0 right-0 h-full flex items-center pr-4">
+          <button
+            className="text-rose focus-visible:outline-2 focus-visible:outline-accent p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d={mobileMenuOpen ? "M18 6L6 18M6 6l12 12" : "M4 8h16M4 16h16"} />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer */}

@@ -17,7 +17,7 @@ const reasons = [
 
 export function WhyChooseUs() {
   const containerRef = useRef<HTMLElement>(null);
-  const [vLines, setVLines] = useState(["16%", "53%", "74.3%", "91%"]);
+  const [vLines] = useState(["16%", "51.8%", "74.1%", "93.3%"]);
 
   useEffect(() => {
     if (isReducedMotion()) return;
@@ -36,17 +36,19 @@ export function WhyChooseUs() {
         ease: "power2.out",
       });
 
-      // Parallax scroll animation for images
+      // Parallax scatter animation for images
       const parallaxSpeeds = [
-        { selector: ".parallax-img-1", y: -250 }, // BBQ - slow
-        { selector: ".parallax-img-2", y: -600 }, // Qubz - fast
-        { selector: ".parallax-img-3", y: -150 }, // Sari - very slow
-        { selector: ".parallax-img-4", y: -400 }, // Jewelry - medium
+        { selector: ".parallax-img-1", y: -150, x: -100, rotation: -5 }, // BBQ - up and left, slight rotate
+        { selector: ".parallax-img-2", y: -800, x: 50, rotation: 10 },  // Qubz - very fast up and right
+        { selector: ".parallax-img-3", y: 300, x: 250, rotation: -15 },  // Sari - down and right
+        { selector: ".parallax-img-4", y: -200, x: 150, rotation: 5 },   // Jewelry - up and right
       ];
 
-      parallaxSpeeds.forEach(({ selector, y }) => {
+      parallaxSpeeds.forEach(({ selector, y, x, rotation }) => {
         gsap.to(selector, {
           y: y,
+          x: x,
+          rotation: rotation,
           ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -62,28 +64,6 @@ export function WhyChooseUs() {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    const updatePositions = () => {
-      const navLinks = document.querySelectorAll("header nav.hidden.md\\:flex a");
-      if (navLinks.length >= 4) {
-        const ww = window.innerWidth;
-        setVLines([
-          "16%",
-          `${(navLinks[0].getBoundingClientRect().left / ww) * 100}%`,
-          `${(navLinks[2].getBoundingClientRect().left / ww) * 100}%`,
-          `${(navLinks[3].getBoundingClientRect().left / ww) * 100}%`,
-        ]);
-      }
-    };
-    updatePositions();
-    window.addEventListener("resize", updatePositions);
-    const timeout = setTimeout(updatePositions, 100);
-    return () => {
-      window.removeEventListener("resize", updatePositions);
-      clearTimeout(timeout);
-    };
-  }, []);
-
   // Grid Horizontal Lines
   const H1 = 300;
   const H2 = 550;
@@ -92,7 +72,7 @@ export function WhyChooseUs() {
   return (
     <section 
       ref={containerRef}
-      className="w-full h-[950px] relative overflow-hidden bg-ink"
+      className="w-full h-[950px] relative bg-ink"
     >
       {/* Grid Lines */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
@@ -107,8 +87,8 @@ export function WhyChooseUs() {
           <line x1="0" y1={H3 - 2} x2="100%" y2={H3 - 2} />
           <line x1="0" y1={H3 + 2} x2="100%" y2={H3 + 2} />
 
-          {/* Vertical Lines */}
-          {vLines.map((v: string, i: number) => (
+          {/* Vertical Lines (Only draw the last 3, ignoring the left-most margin) */}
+          {vLines.slice(1).map((v: string, i: number) => (
             <g key={i}>
               <line x1={`calc(${v} - 2px)`} y1="0" x2={`calc(${v} - 2px)`} y2="100%" />
               <line x1={`calc(${v} + 2px)`} y1="0" x2={`calc(${v} + 2px)`} y2="100%" />
@@ -123,7 +103,7 @@ export function WhyChooseUs() {
         {/* Title */}
         <div 
           className="absolute flex items-center justify-center fade-up pointer-events-auto" 
-          style={{ top: 0, height: H1 - 2, left: `calc(${vLines[0]} + 2px)`, width: `calc(${vLines[1]} - ${vLines[0]} - 4px)` }}
+          style={{ top: 0, height: H1 - 2, left: 0, width: `calc(${vLines[1]} - 2px)` }}
         >
           <h2 className="font-bebas text-bone text-4xl md:text-[3rem] tracking-wide uppercase">
             Why Choose Us
@@ -132,8 +112,8 @@ export function WhyChooseUs() {
 
         {/* Reasons Row 1 */}
         <div 
-          className="absolute flex items-center px-8 lg:px-16 fade-up pointer-events-auto" 
-          style={{ top: H1 + 2, height: H2 - H1 - 4, left: `calc(${vLines[0]} + 2px)`, width: `calc(${vLines[1]} - ${vLines[0]} - 4px)` }}
+          className="absolute flex items-center px-8 lg:px-16 md:pl-[max(6vw,24px)] fade-up pointer-events-auto" 
+          style={{ top: H1 + 2, height: H2 - H1 - 4, left: 0, width: `calc(${vLines[1]} - 2px)` }}
         >
           <div className="grid grid-cols-2 gap-x-12 w-full">
             <p className="font-bebas text-[#7C93A3] text-[13px] md:text-[15px] leading-[1.6] tracking-wider text-balance opacity-80 uppercase">
@@ -147,8 +127,8 @@ export function WhyChooseUs() {
 
         {/* Reasons Row 2 */}
         <div 
-          className="absolute flex items-center px-8 lg:px-16 fade-up pointer-events-auto" 
-          style={{ top: H2 + 2, height: H3 - H2 - 4, left: `calc(${vLines[0]} + 2px)`, width: `calc(${vLines[1]} - ${vLines[0]} - 4px)` }}
+          className="absolute flex items-center px-8 lg:px-16 md:pl-[max(6vw,24px)] fade-up pointer-events-auto" 
+          style={{ top: H2 + 2, height: H3 - H2 - 4, left: 0, width: `calc(${vLines[1]} - 2px)` }}
         >
           <div className="grid grid-cols-2 gap-x-12 w-full">
             <p className="font-bebas text-[#7C93A3] text-[13px] md:text-[15px] leading-[1.6] tracking-wider text-balance opacity-80 uppercase">

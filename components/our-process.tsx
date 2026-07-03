@@ -31,7 +31,7 @@ export function OurProcess() {
       stagger: 0.1,
       ease: "back.out(1.5)",
     });
-    
+
     gsap.from(".process-track", {
       scrollTrigger: {
         trigger: containerRef.current,
@@ -52,32 +52,32 @@ export function OurProcess() {
       </div>
 
       <div ref={containerRef} className="relative w-full aspect-[2/1] md:aspect-[2.5/1] max-w-5xl mx-auto">
-        
+
         {/* SVG Track and Connector Lines */}
-        <svg 
-          className="absolute inset-0 w-full h-full pointer-events-none" 
-          viewBox="0 0 1000 400" 
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          viewBox="0 0 1000 400"
           preserveAspectRatio="xMidYMid meet"
         >
           {/* Main Track */}
-          <path 
+          <path
             className="process-track"
-            d="M 150 200 A 100 100 0 0 1 250 100 L 800 100 A 100 100 0 0 1 800 300 L 250 300" 
-            fill="none" 
-            stroke="#4A4A4A" 
-            strokeWidth="2" 
+            d="M 150 200 A 100 100 0 0 1 250 100 L 800 100 A 100 100 0 0 1 800 300 L 250 300"
+            fill="none"
+            stroke="#4A4A4A"
+            strokeWidth="2"
             strokeDasharray="4000"
           />
 
           {/* Vertical Connectors */}
           {NODES.map((node) => (
-            <line 
+            <line
               key={`line-${node.id}`}
-              x1={node.x} 
-              y1={node.y} 
-              x2={node.x} 
-              y2={node.y + 40} 
-              stroke="#4A4A4A" 
+              x1={node.x}
+              y1={node.y}
+              x2={node.x}
+              y2={node.y + 40}
+              stroke="#4A4A4A"
               strokeWidth="2"
             />
           ))}
@@ -86,9 +86,9 @@ export function OurProcess() {
         {/* Nodes and Labels */}
         {NODES.map((node) => {
           const isHovered = hoveredNode === node.id;
-          
+
           return (
-            <div 
+            <div
               key={node.id}
               className="process-node absolute flex flex-col items-center group cursor-pointer"
               style={{
@@ -101,19 +101,17 @@ export function OurProcess() {
               onMouseLeave={() => setHoveredNode(null)}
             >
               {/* Expanding Circle / Pill */}
-              <div 
-                className={`flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] overflow-hidden shadow-lg ${
-                  isHovered ? "bg-accent scale-[3]" : "bg-[#4A4A4A] scale-100"
-                } ${node.isPill ? (isHovered ? "w-10 h-10 rounded-full" : "w-16 h-8 rounded-full") : "w-8 h-8 rounded-full"}`}
+              <div
+                className={`flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] overflow-hidden shadow-lg ${isHovered ? "bg-accent scale-[3]" : "bg-[#4A4A4A] scale-100"
+                  } ${node.isPill ? (isHovered ? "w-8 h-8 rounded-full" : "w-16 h-8 rounded-full") : "w-8 h-8 rounded-full"}`}
               >
                 {/* Illustration (Visible on hover) */}
-                <div 
-                  className={`relative w-full h-full transition-opacity duration-300 delay-100 ${
-                    isHovered ? "opacity-100" : "opacity-0"
-                  }`}
+                <div
+                  className={`relative w-full h-full transition-opacity duration-300 delay-100 ${isHovered ? "opacity-100" : "opacity-0"
+                    }`}
                 >
-                  <img 
-                    src="/images/hero-ribbon-photo.png" 
+                  <img
+                    src="/images/hero-ribbon-photo.png"
                     alt={node.label}
                     className="w-full h-full object-cover mix-blend-multiply opacity-50"
                   />
@@ -121,7 +119,7 @@ export function OurProcess() {
               </div>
 
               {/* Label */}
-              <div 
+              <div
                 className="absolute text-center pointer-events-none w-48"
                 style={{ top: '60px' }} // 40px for line + 20px padding
               >

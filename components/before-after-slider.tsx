@@ -93,7 +93,7 @@ export function BeforeAfterSlider({ beforeImage, afterImage, alt = "Before and a
           src={beforeImage} 
           alt={`${alt} (Before)`}
           fill
-          className="object-cover"
+          className="object-cover grayscale"
         />
       </div>
 
