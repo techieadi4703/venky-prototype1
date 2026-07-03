@@ -118,10 +118,11 @@ function pointAt(u: number) {
 // ---- Sheet tuning -------------------------------------------------------
 const SHEET_H0 = 150; // baked sheet height (paper width at scale 1)
 const SHEET_L0 = 178; // baked sheet length (along the feed direction)
-const D = 195; // uniform visual spacing (> 178 means a consistent gap everywhere)
+const TARGET_D = 210; // desired uniform visual spacing
+const N = Math.round(PATH_U_LEN / TARGET_D);
+const D = PATH_U_LEN / N; // exact spacing to make the loop perfectly seamless
 const FOLD_TILT = 13; // degrees; alternates +/- so sheets tent into folds
 const SPEED = 45; // virtual units / second
-const N = Math.ceil(PATH_U_LEN / D) + 1;
 
 // A gallery of "retouched" prints — each sheet keeps its photo for the whole
 // journey, so the loop stays seamless while still showing a mix of images.
