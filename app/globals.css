@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: #030505;
+  --color-accent: #506E7B;
+  --color-rose: #A98A86;
+  --color-rose-shadow: #8D6759;
+  --color-bone: #EAECE6;
+  --color-logo-grey: #898383;
+  --color-body-grey: #606161;
+  --color-panel: #1F1F24;
+  
+  --font-bebas: var(--font-bebas-neue);
+  --font-oswald: var(--font-oswald);
+  
+  --color-background: var(--color-ink);
+  --color-foreground: var(--color-bone);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --ink: #030505;
+  --accent: #506E7B;
+  --rose: #A98A86;
+  --rose-shadow: #8D6759;
+  --bone: #EAECE6;
+  --logo-grey: #898383;
+  --body-grey: #606161;
+  --panel: #1F1F24;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  /* The default font for now is Bebas, as it's the only one used on Home page */
+  font-family: var(--font-bebas), sans-serif;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-drift {
+  animation: drift 20s linear infinite;
+}
+
+.animate-wobble {
+  animation: wobble 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift, .animate-wobble {
+    animation: none !important;
+  }
 }
