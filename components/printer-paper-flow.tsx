@@ -34,9 +34,9 @@ const PRINTER_H = PRINTER.w / PRINTER_ASPECT;
 // Drape path control points, right (printer slot) -> left/up (off screen).
 // { x, y, w } — w is the paper width (grows as it comes toward the viewer).
 const CTRL = [
-  { x: 1345, y: 545, w: 66 }, // hidden inside the printer (spawn point)
-  { x: 1300, y: 600, w: 74 }, // just out of the slot
-  { x: 1225, y: 682, w: 92 },
+  { x: 1322, y: 632, w: 62 }, // at the front output slot (spawn point)
+  { x: 1282, y: 676, w: 76 }, // sliding out onto the tray
+  { x: 1200, y: 716, w: 94 }, // tipping down off the tray
   { x: 1100, y: 758, w: 112 },
   { x: 940, y: 800, w: 132 }, // bottom sweep begins
   { x: 748, y: 814, w: 150 },
@@ -214,7 +214,37 @@ export function PrinterPaperFlow() {
           </filter>
         </defs>
 
-        {/* ================= FAN-FOLD SHEETS ================= */}
+        {/* ================= PRINTER (drawn first -> behind the prints) ===== */}
+        <image
+          href="/images/printer-nobg.png"
+          x={PRINTER.x}
+          y={PRINTER.y}
+          width={PRINTER.w}
+          height={PRINTER_H}
+          preserveAspectRatio="xMidYMid meet"
+        />
+
+        {/* teal "GET YOUR IMAGINATION" stack loaded in the rear feed tray */}
+        <g>
+          <rect x={1237} y={378} width={150} height={128} fill="var(--color-accent)" />
+          {Array.from({ length: QUEUE_LINES }).map((_, i) => (
+            <text
+              key={i}
+              x={1245}
+              y={396 + i * 15}
+              fontFamily="var(--font-bebas), sans-serif"
+              fontSize={12}
+              letterSpacing={0.3}
+              fill="#050607"
+              fontWeight={700}
+              opacity={1 - i * 0.03}
+            >
+              GET YOUR IMAGINATION
+            </text>
+          ))}
+        </g>
+
+        {/* ===== FAN-FOLD SHEETS (drawn last -> in FRONT, out of the slot) ===== */}
         <g ref={groupRef}>
           {Array.from({ length: N }).map((_, k) => {
             const L = SHEET_L0;
@@ -256,36 +286,6 @@ export function PrinterPaperFlow() {
               </g>
             );
           })}
-        </g>
-
-        {/* ================= PRINTER ================= */}
-        <image
-          href="/images/printer-nobg.png"
-          x={PRINTER.x}
-          y={PRINTER.y}
-          width={PRINTER.w}
-          height={PRINTER_H}
-          preserveAspectRatio="xMidYMid meet"
-        />
-
-        {/* teal "GET YOUR IMAGINATION" stack loaded in the rear feed tray */}
-        <g>
-          <rect x={1237} y={378} width={150} height={128} fill="var(--color-accent)" />
-          {Array.from({ length: QUEUE_LINES }).map((_, i) => (
-            <text
-              key={i}
-              x={1245}
-              y={396 + i * 15}
-              fontFamily="var(--font-bebas), sans-serif"
-              fontSize={12}
-              letterSpacing={0.3}
-              fill="#050607"
-              fontWeight={700}
-              opacity={1 - i * 0.03}
-            >
-              GET YOUR IMAGINATION
-            </text>
-          ))}
         </g>
       </svg>
     </div>
