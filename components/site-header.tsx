@@ -51,10 +51,10 @@ export function SiteHeader() {
         <nav className="hidden md:block absolute inset-0 w-full h-full pointer-events-none">
           
           {/* Column 2 (52%): HOME and ABOUT US */}
-          <div className="absolute top-1/2 -translate-y-1/2 flex items-center gap-12 pointer-events-auto" style={{ left: 'calc(52% + 16px)' }}>
+          <div className="absolute top-1/2 -translate-y-1/2 flex items-center gap-16 md:gap-24 pointer-events-auto" style={{ left: 'calc(52% + 16px)' }}>
             <Link
               href="/"
-              className={`font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out ${
+              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
                 pathname === "/" ? "text-accent" : "text-rose hover:text-accent"
               }`}
             >
@@ -62,7 +62,7 @@ export function SiteHeader() {
             </Link>
             <Link
               href="/about"
-              className={`font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out ${
+              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
                 pathname === "/about" ? "text-accent" : "text-rose hover:text-accent"
               }`}
             >
@@ -70,27 +70,25 @@ export function SiteHeader() {
             </Link>
           </div>
 
-          {/* Column 3 (70%): OUR WORK */}
-          <Link
-            href="/work"
-            className={`absolute top-1/2 -translate-y-1/2 font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out pointer-events-auto ${
-              pathname === "/work" ? "text-accent" : "text-rose hover:text-accent"
-            }`}
-            style={{ left: 'calc(70% + 16px)' }}
-          >
-            OUR WORK
-          </Link>
-
-          {/* Column 4 (83%): CONTACT US */}
-          <Link
-            href="/contact"
-            className={`absolute top-1/2 -translate-y-1/2 font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out pointer-events-auto ${
-              pathname === "/contact" ? "text-accent" : "text-rose hover:text-accent"
-            }`}
-            style={{ left: 'calc(83% + 16px)' }}
-          >
-            CONTACT US
-          </Link>
+          {/* Column 3 (74%): OUR WORK and CONTACT US */}
+          <div className="absolute top-1/2 -translate-y-1/2 flex items-center gap-16 md:gap-24 pointer-events-auto" style={{ left: 'calc(74% + 16px)' }}>
+            <Link
+              href="/work"
+              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
+                pathname === "/work" ? "text-accent" : "text-rose hover:text-accent"
+              }`}
+            >
+              OUR WORK
+            </Link>
+            <Link
+              href="/contact"
+              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
+                pathname === "/contact" ? "text-accent" : "text-rose hover:text-accent"
+              }`}
+            >
+              CONTACT US
+            </Link>
+          </div>
         </nav>
 
         {/* Mobile Hamburger (Right aligned) */}
