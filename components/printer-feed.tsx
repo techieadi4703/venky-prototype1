@@ -129,9 +129,9 @@ export function PrinterFeed() {
       aria-hidden="true"
     >
       {/* ---- PRINTER BODY ---- */}
-      <div className="absolute right-[3%] top-[44%] w-[320px] h-[200px] z-30">
+      <div className="absolute right-[3%] top-[38%] w-[320px] h-[260px] z-30">
         <Image
-          src="/images/printer-v2.png"
+          src="/images/printer-nobg.png"
           alt="Printer"
           fill
           sizes="320px"
@@ -142,17 +142,17 @@ export function PrinterFeed() {
       </div>
 
       {/* ---- PAGE ON TOP OF PRINTER with "GET YOUR IMAGINATION" ---- */}
-      {/* z-40 so it renders ABOVE the printer (z-30), appearing to stick out of the rear feed */}
+      {/* z-40 = ABOVE the printer (z-30), sits in the rear paper feed tray */}
       <div 
         className="absolute z-40"
         style={{
-          right: "4%",
-          top: "16%",
-          width: "300px",
+          right: "4.5%",
+          top: "8%",
+          width: "270px",
         }}
       >
         <div
-          className="w-full px-5 py-6 relative"
+          className="w-full px-5 py-5 relative"
           style={{
             backgroundColor: "var(--color-accent)",
             boxShadow: "0 10px 40px rgba(0,0,0,0.55)",
@@ -161,9 +161,9 @@ export function PrinterFeed() {
           {queueLines.map((text, i) => (
             <div
               key={i}
-              className="font-bebas text-ink tracking-[0.12em] leading-[1.55] text-[1.15rem] font-bold"
+              className="font-bebas text-ink tracking-[0.1em] leading-[1.6] text-[1.1rem] font-bold"
               style={{
-                opacity: 1 - i * 0.03,
+                opacity: 1 - i * 0.02,
               }}
             >
               {text}
