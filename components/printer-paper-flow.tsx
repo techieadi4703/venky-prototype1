@@ -36,13 +36,13 @@ const PRINTER_H = PRINTER.w / PRINTER_ASPECT;
 const CTRL = [
   { x: 1262, y: 604, w: 58 }, // inside the slot
   { x: 1180, y: 630, w: 70 }, // emerging down-left, shallower drop
-  { x: 1050, y: 670, w: 90 }, 
-  { x: 880, y: 710, w: 120 }, 
-  { x: 650, y: 740, w: 160 }, 
-  { x: 400, y: 720, w: 200 }, 
-  { x: 150, y: 650, w: 250 }, 
-  { x: -100, y: 500, w: 310 }, 
-  { x: -350, y: 250, w: 380 }, 
+  { x: 1050, y: 670, w: 90 },
+  { x: 880, y: 710, w: 120 },
+  { x: 650, y: 740, w: 160 },
+  { x: 400, y: 720, w: 200 },
+  { x: 150, y: 650, w: 250 },
+  { x: -100, y: 500, w: 310 },
+  { x: -350, y: 250, w: 380 },
 ];
 
 // ---- Build an arc-length sampled polyline from the control points -------
@@ -94,13 +94,13 @@ function buildSamples(pts: typeof CTRL) {
     cum += ds;
     const progress = cum / PATH_LEN;
     const rotY = -60 * progress;
-    
+
     const avgW = (out[i].w + out[i - 1].w) / 2;
     const avgScale = avgW / 150;
     const apparentScale = avgScale * Math.max(0.2, Math.cos((rotY * Math.PI) / 180));
-    
+
     cumU += ds / apparentScale;
-    
+
     out[i].cum = cum;
     out[i].cumU = cumU;
   }
@@ -172,12 +172,12 @@ export function PrinterPaperFlow() {
       svals[k] = u;
       const el = sheetRefs.current[k];
       if (!el) continue;
-      
+
       const p = pointAt(u);
-      
+
       el.setAttribute("transform", "");
       el.style.transform = sheetTransform(u, k, p);
-      
+
       // Compute the folded corner size
       const progress = p.cum / PATH_LEN;
       let foldAmt = 0;
@@ -191,13 +191,13 @@ export function PrinterPaperFlow() {
       // Update the clip-path cutting the corner
       const clipPoly = document.getElementById(`poly-clip-${k}`);
       if (clipPoly) {
-        clipPoly.setAttribute("points", `${-L/2},${-H/2} ${L/2},${-H/2} ${L/2},${H/2 - F} ${L/2 - F},${H/2} ${-L/2},${H/2}`);
+        clipPoly.setAttribute("points", `${-L / 2},${-H / 2} ${L / 2},${-H / 2} ${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${-L / 2},${H / 2}`);
       }
 
       // Update the folded flap triangle
       const flapPoly = document.getElementById(`poly-flap-${k}`);
       if (flapPoly) {
-        flapPoly.setAttribute("points", `${L/2},${H/2 - F} ${L/2 - F},${H/2} ${L/2 - F},${H/2 - F}`);
+        flapPoly.setAttribute("points", `${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${L / 2 - F},${H / 2 - F}`);
         flapPoly.style.opacity = F > 1 ? "1" : "0";
       }
 
@@ -228,138 +228,149 @@ export function PrinterPaperFlow() {
   });
 
   return (
-    <div
-      className="absolute inset-0 z-[1] hidden md:block pointer-events-none overflow-hidden"
-      aria-hidden="true"
-    >
-      <svg
-        viewBox={`0 0 ${VB_W} ${VB_H}`}
-        preserveAspectRatio="xMidYMax slice"
-        className="w-full h-full"
+    <>
+      {/* Preload highly optimized Next.js Image versions to eliminate pop-in */}
+      <link rel="preload" as="image" href={`/_next/image?url=${encodeURIComponent("/images/printer-nobg.png")}&w=640&q=75`} />
+      {PHOTOS.map((p) => (
+        <link key={p} rel="preload" as="image" href={`/_next/image?url=${encodeURIComponent(p)}&w=384&q=75`} />
+      ))}
+
+      <div
+        className="absolute inset-0 z-[1] hidden md:block pointer-events-none overflow-hidden"
+        aria-hidden="true"
       >
-        <defs>
-          {/* light warm tint to keep the prints on-palette without hiding them */}
-          <linearGradient id="ppf-tint" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#C7A59F" stopOpacity="0.12" />
-            <stop offset="1" stopColor="#8D6759" stopOpacity="0.2" />
-          </linearGradient>
-          {/* soft top-lit sheen across each sheet */}
-          <linearGradient id="ppf-sheen" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#ffffff" stopOpacity="0.16" />
-            <stop offset="0.5" stopColor="#ffffff" stopOpacity="0" />
-            <stop offset="1" stopColor="#000000" stopOpacity="0.34" />
-          </linearGradient>
-          {/* fold shadow along the leading edge of each sheet */}
-          <linearGradient id="ppf-fold" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#000000" stopOpacity="0.55" />
-            <stop offset="0.18" stopColor="#000000" stopOpacity="0" />
-          </linearGradient>
-          {/* drop shadow so each sheet reads as a separate physical print */}
-          <filter id="ppf-drop" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#000" floodOpacity="0.55" />
-          </filter>
-          {/* Clip path to hide the part of the ribbon that is "inside" the printer */}
-          <clipPath id="printer-slot-clip">
-            <polygon points="-2000,-1000 1150,-1000 1150,600 1262,600 1262,3000 -2000,3000" />
-          </clipPath>
-        </defs>
+        <svg
+          viewBox={`0 0 ${VB_W} ${VB_H}`}
+          preserveAspectRatio="xMidYMax slice"
+          className="w-full h-full"
+        >
+          <defs>
+            {/* light warm tint to keep the prints on-palette without hiding them */}
+            <linearGradient id="ppf-tint" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#C7A59F" stopOpacity="0.12" />
+              <stop offset="1" stopColor="#8D6759" stopOpacity="0.2" />
+            </linearGradient>
+            {/* soft top-lit sheen across each sheet */}
+            <linearGradient id="ppf-sheen" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#ffffff" stopOpacity="0.16" />
+              <stop offset="0.5" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="1" stopColor="#000000" stopOpacity="0.34" />
+            </linearGradient>
+            {/* fold shadow along the leading edge of each sheet */}
+            <linearGradient id="ppf-fold" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stopColor="#000000" stopOpacity="0.55" />
+              <stop offset="0.18" stopColor="#000000" stopOpacity="0" />
+            </linearGradient>
+            {/* drop shadow so each sheet reads as a separate physical print */}
+            <filter id="ppf-drop" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#000" floodOpacity="0.55" />
+            </filter>
+            {/* Clip path to hide the part of the ribbon that is "inside" the printer */}
+            <clipPath id="printer-slot-clip">
+              <polygon points="-2000,-1000 1150,-1000 1150,600 1262,600 1262,3000 -2000,3000" />
+            </clipPath>
+          </defs>
 
-        {/* ================= PRINTER (drawn first -> behind the prints) ===== */}
-        <image
-          href="/images/printer-nobg.png"
-          x={PRINTER.x}
-          y={PRINTER.y}
-          width={PRINTER.w}
-          height={PRINTER_H}
-          preserveAspectRatio="xMidYMid meet"
-        />
+          {/* ================= PRINTER AND TEAL PAPER (Scaled down around the slot point) ===== */}
+          <g transform="translate(1262, 604) scale(0.8) translate(-1262, -604)">
+            {/* PRINTER (drawn first -> behind the prints) */}
+            <image
+              href={`/_next/image?url=${encodeURIComponent("/images/printer-nobg.png")}&w=640&q=75`}
+              x={PRINTER.x}
+              y={PRINTER.y}
+              width={PRINTER.w}
+              height={PRINTER_H}
+              preserveAspectRatio="xMidYMid meet"
+            />
 
-        {/* teal "GET YOUR IMAGINATION" sheet standing in the rear feed tray */}
-        <g>
-          <rect x={1150} y={312} width={170} height={196} fill="var(--color-accent)" />
-          {Array.from({ length: QUEUE_LINES }).map((_, i) => (
-            <text
-              key={i}
-              x={1156}
-              y={346 + i * 20}
-              fontFamily="var(--font-anton), sans-serif"
-              fontSize={19}
-              letterSpacing={-0.1}
-              fill="#050607"
-            >
-              GET YOUR IMAGINATION
-            </text>
-          ))}
-        </g>
+            {/* teal "GET YOUR IMAGINATION" sheet standing in the rear feed tray */}
+            <g>
+              <rect x={1150} y={312} width={170} height={196} fill="var(--color-accent)" />
+              {Array.from({ length: QUEUE_LINES }).map((_, i) => (
+                <text
+                  key={i}
+                  x={1156}
+                  y={346 + i * 20}
+                  fontFamily="var(--font-anton), sans-serif"
+                  fontSize={19}
+                  letterSpacing={-0.1}
+                  fill="#050607"
+                >
+                  GET YOUR IMAGINATION
+                </text>
+              ))}
+            </g>
+          </g>
 
-        {/* ===== FAN-FOLD SHEETS (drawn last -> in FRONT, out of the slot) ===== */}
-        <g ref={groupRef} clipPath="url(#printer-slot-clip)">
-          {Array.from({ length: N }).map((_, k) => {
-            const u0 = (k * D) % PATH_U_LEN;
-            const p = pointAt(u0);
-            const L = SHEET_L0;
-            const H = SHEET_H0; // Keep the photo proportions constant!
-            
-            const progress = p.cum / PATH_LEN;
-            let foldAmt = 0;
-            if (progress > 0.1 && progress < 0.9) {
-              foldAmt = Math.sin(((progress - 0.1) / 0.8) * Math.PI);
-            }
-            const F = 50 * foldAmt;
-            const clipPoints = `${-L/2},${-H/2} ${L/2},${-H/2} ${L/2},${H/2 - F} ${L/2 - F},${H/2} ${-L/2},${H/2}`;
-            const flapPoints = `${L/2},${H/2 - F} ${L/2 - F},${H/2} ${L/2 - F},${H/2 - F}`;
+          {/* ===== FAN-FOLD SHEETS (drawn last -> in FRONT, out of the slot) ===== */}
+          <g ref={groupRef} clipPath="url(#printer-slot-clip)">
+            {Array.from({ length: N }).map((_, k) => {
+              const u0 = (k * D) % PATH_U_LEN;
+              const p = pointAt(u0);
+              const L = SHEET_L0;
+              const H = SHEET_H0; // Keep the photo proportions constant!
 
-            return (
-              <g
-                key={k}
-                ref={(el) => {
-                  sheetRefs.current[k] = el;
-                }}
-                style={{ transform: sheetTransform(u0, k, p) }}
-                filter="url(#ppf-drop)"
-              >
-                <clipPath id={`clip-fold-${k}`}>
-                  <polygon id={`poly-clip-${k}`} points={clipPoints} />
-                </clipPath>
+              const progress = p.cum / PATH_LEN;
+              let foldAmt = 0;
+              if (progress > 0.1 && progress < 0.9) {
+                foldAmt = Math.sin(((progress - 0.1) / 0.8) * Math.PI);
+              }
+              const F = 50 * foldAmt;
+              const clipPoints = `${-L / 2},${-H / 2} ${L / 2},${-H / 2} ${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${-L / 2},${H / 2}`;
+              const flapPoints = `${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${L / 2 - F},${H / 2 - F}`;
 
-                <g clipPath={`url(#clip-fold-${k})`}>
-                  <image
-                    href={PHOTOS[k % PHOTOS.length]}
-                    x={-L / 2}
-                    y={-H / 2}
-                    width={L}
-                    height={H}
-                    preserveAspectRatio="xMidYMid slice"
-                  />
-                  <rect x={-L / 2} y={-H / 2} width={L} height={H} fill="url(#ppf-tint)" />
-                  <rect x={-L / 2} y={-H / 2} width={L} height={H} fill="url(#ppf-sheen)" />
-                  {/* crease shadow on the leading (printer-side) edge */}
-                  <rect x={L / 2 - L * 0.18} y={-H / 2} width={L * 0.18} height={H} fill="url(#ppf-fold)" />
-                  {/* crisp paper edge */}
-                  <rect
-                    x={-L / 2}
-                    y={-H / 2}
-                    width={L}
-                    height={H}
-                    fill="none"
-                    stroke="#EAECE6"
-                    strokeOpacity={0.28}
-                    strokeWidth={2}
+              return (
+                <g
+                  key={k}
+                  ref={(el) => {
+                    sheetRefs.current[k] = el;
+                  }}
+                  style={{ transform: sheetTransform(u0, k, p) }}
+                  filter="url(#ppf-drop)"
+                >
+                  <clipPath id={`clip-fold-${k}`}>
+                    <polygon id={`poly-clip-${k}`} points={clipPoints} />
+                  </clipPath>
+
+                  <g clipPath={`url(#clip-fold-${k})`}>
+                    <image
+                      href={`/_next/image?url=${encodeURIComponent(PHOTOS[k % PHOTOS.length])}&w=384&q=75`}
+                      x={-L / 2}
+                      y={-H / 2}
+                      width={L}
+                      height={H}
+                      preserveAspectRatio="xMidYMid slice"
+                    />
+                    <rect x={-L / 2} y={-H / 2} width={L} height={H} fill="url(#ppf-tint)" />
+                    <rect x={-L / 2} y={-H / 2} width={L} height={H} fill="url(#ppf-sheen)" />
+                    {/* crease shadow on the leading (printer-side) edge */}
+                    <rect x={L / 2 - L * 0.18} y={-H / 2} width={L * 0.18} height={H} fill="url(#ppf-fold)" />
+                    {/* crisp paper edge */}
+                    <rect
+                      x={-L / 2}
+                      y={-H / 2}
+                      width={L}
+                      height={H}
+                      fill="none"
+                      stroke="#EAECE6"
+                      strokeOpacity={0.28}
+                      strokeWidth={2}
+                    />
+                  </g>
+
+                  {/* The folded corner flap */}
+                  <polygon
+                    id={`poly-flap-${k}`}
+                    points={flapPoints}
+                    fill="#e0d8d0"
+                    opacity={F > 1 ? 1 : 0}
                   />
                 </g>
-                
-                {/* The folded corner flap */}
-                <polygon
-                  id={`poly-flap-${k}`}
-                  points={flapPoints}
-                  fill="#e0d8d0"
-                  opacity={F > 1 ? 1 : 0}
-                />
-              </g>
-            );
-          })}
-        </g>
-      </svg>
-    </div>
+              );
+            })}
+          </g>
+        </svg>
+      </div>
+    </>
   );
 }

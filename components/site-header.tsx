@@ -70,8 +70,8 @@ export function SiteHeader() {
             </Link>
           </div>
 
-          {/* Column 3 (74%): OUR WORK and CONTACT US */}
-          <div className="absolute top-1/2 -translate-y-1/2 flex items-center gap-16 md:gap-24 pointer-events-auto" style={{ left: 'calc(74% + 16px)' }}>
+          {/* Column 3 (74% to 96%): OUR WORK and CONTACT US */}
+          <div className="absolute top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-auto" style={{ left: 'calc(74% + 16px)', right: 'calc(4% + 16px)' }}>
             <Link
               href="/work"
               className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${

@@ -16,10 +16,6 @@ export default function AboutPage() {
       {/* Grid Lines Overlay */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
         <g stroke="var(--color-accent)" strokeWidth="1" opacity="0.6">
-          {/* H1: Full width */}
-          <line x1="0" y1={`calc(${h1} - 2px)`} x2="100%" y2={`calc(${h1} - 2px)`} />
-          <line x1="0" y1={`calc(${h1} + 2px)`} x2="100%" y2={`calc(${h1} + 2px)`} />
-          
           {/* H2: 0 to Left edge of image (~57%) */}
           <line x1="0" y1={`calc(${h2} - 2px)`} x2="57%" y2={`calc(${h2} - 2px)`} />
           <line x1="0" y1={`calc(${h2} + 2px)`} x2="57%" y2={`calc(${h2} + 2px)`} />
@@ -29,12 +25,21 @@ export default function AboutPage() {
           <line x1="69%" y1={`calc(${h3} + 2px)`} x2="100%" y2={`calc(${h3} + 2px)`} />
 
           {/* Vertical Lines */}
-          {vLines.map((v: string, i: number) => (
-            <g key={i}>
-              <line x1={`calc(${v} - 2px)`} y1="0" x2={`calc(${v} - 2px)`} y2="100%" />
-              <line x1={`calc(${v} + 2px)`} y1="0" x2={`calc(${v} + 2px)`} y2="100%" />
-            </g>
-          ))}
+          {vLines.map((v: string, i: number) => {
+            if (i === vLines.length - 1) {
+              return (
+                <g key={i}>
+                  <line x1={v} y1="0" x2={v} y2="100%" />
+                </g>
+              );
+            }
+            return (
+              <g key={i}>
+                <line x1={`calc(${v} - 2px)`} y1="0" x2={`calc(${v} - 2px)`} y2="100%" />
+                <line x1={`calc(${v} + 2px)`} y1="0" x2={`calc(${v} + 2px)`} y2="100%" />
+              </g>
+            );
+          })}
         </g>
       </svg>
 

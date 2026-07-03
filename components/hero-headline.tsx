@@ -42,34 +42,38 @@ export function HeroHeadline({ isReady }: { isReady: boolean }) {
   return (
     <div 
       ref={containerRef} 
-      className="absolute z-10 flex flex-col justify-center pl-[2%]"
-      style={{ left: '52%', width: '22%', top: '35%', height: '15%' }}
+      className="absolute z-10 flex flex-col items-start justify-start pointer-events-none pl-6 -mt-6 md:-mt-10"
+      style={{ left: '52%', width: '22%', top: '32%', height: '22%' }}
     >
-      <div className="relative flex items-center font-bebas text-bone">
-        {/* The large '30' */}
-        <div>
-          <div className="headline-strip-inner text-accent text-[7rem] md:text-[11rem] leading-none pr-3 tracking-tighter">
-            30
-          </div>
-        </div>
-        
-        {/* 'YEARS EXPERTS' stacked */}
-        <div className="flex flex-col justify-center">
-          <div>
-            <div className="headline-strip-inner text-[2.5rem] md:text-[4rem] leading-none tracking-wider">
-              YEARS
+      <div className="flex flex-col items-start">
+        <div className="relative flex items-center font-bebas text-bone w-full justify-start gap-3">
+          {/* The large '30' */}
+          <div className="overflow-hidden font-anton">
+            <div className="headline-strip-inner text-accent text-[6rem] md:text-[9rem] leading-[0.8] tracking-tight">
+              30
             </div>
           </div>
-          <div>
-            <div className="headline-strip-inner text-[2.5rem] md:text-[4rem] leading-none tracking-wider mt-1">
-              EXPERTS
+          
+          {/* 'YEARS EXPERTS' stacked */}
+          <div className="flex flex-col justify-center gap-0">
+            <div className="overflow-hidden">
+              <div className="headline-strip-inner text-[2.2rem] md:text-[3.2rem] leading-[0.9] tracking-wider">
+                YEARS
+              </div>
+            </div>
+            <div className="overflow-hidden">
+              <div className="headline-strip-inner text-[2.2rem] md:text-[3.2rem] leading-[0.9] tracking-wider">
+                EXPERTS
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="subhead-fade mt-4 font-bebas text-bone text-lg md:text-xl tracking-[0.2em] uppercase">
-        Flawless retouch to print
+        <div className="overflow-hidden w-full mt-2">
+          <div className="subhead-fade font-bebas text-accent text-[1.1rem] md:text-[1.4rem] leading-none tracking-[0.08em] uppercase w-full">
+            Flawless retouch to print
+          </div>
+        </div>
       </div>
     </div>
   );

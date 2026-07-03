@@ -6,7 +6,7 @@ import { MO_CONFIG, isReducedMotion } from "@/lib/motion";
 
 export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const verticalLines = ["16%", "52%", "74%", "85%", "96%"];
+  const verticalLines = ["16%", "52%", "74%", "96%"];
 
   // H-lines (in %)
   const h1 = 12; // Below Header
@@ -54,16 +54,25 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
       >
         {/* Use the exact color from the screenshot: #506E7B (accent) but with high opacity to match */}
         <g stroke="var(--color-accent)" strokeWidth="1" opacity="0.6">
-          {/* === VERTICAL LINES (Double lines with 6px gap) === */}
-          {verticalLines.map((v, i) => (
-            <g key={`v-${i}`}>
-              <line x1={`calc(${v} - 3px)`} y1="0" x2={`calc(${v} - 3px)`} y2="100%" />
-              <line x1={`calc(${v} + 3px)`} y1="0" x2={`calc(${v} + 3px)`} y2="100%" />
-            </g>
-          ))}
+          {/* === VERTICAL LINES === */}
+          {verticalLines.map((v, i) => {
+            if (i === verticalLines.length - 1) {
+              return (
+                <g key={`v-${i}`}>
+                  <line x1={v} y1="0" x2={v} y2="100%" />
+                </g>
+              );
+            }
+            return (
+              <g key={`v-${i}`}>
+                <line x1={`calc(${v} - 3px)`} y1="0" x2={`calc(${v} - 3px)`} y2="100%" />
+                <line x1={`calc(${v} + 3px)`} y1="0" x2={`calc(${v} + 3px)`} y2="100%" />
+              </g>
+            );
+          })}
 
           {/* === HORIZONTAL LINES (Double lines with 6px gap) === */}
-          {[h1, h2, h3, h4, h5].map((h, i) => (
+          {[h2, h3, h4, h5].map((h, i) => (
             <g key={`h-${i}`}>
               <line x1="0" y1={`calc(${h}% - 3px)`} x2="100%" y2={`calc(${h}% - 3px)`} />
               <line x1="0" y1={`calc(${h}% + 3px)`} x2="100%" y2={`calc(${h}% + 3px)`} />
