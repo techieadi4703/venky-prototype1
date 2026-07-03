@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { GridOverlay } from "@/components/grid-overlay";
 import { HeroHeadline } from "@/components/hero-headline";
-import { PaperConveyor } from "@/components/paper-conveyor";
+import { PrinterPaperFlow } from "@/components/printer-paper-flow";
 import { CtaButton } from "@/components/cta-button";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { WorkPreviewStrip } from "@/components/work-preview-strip";
@@ -26,8 +26,8 @@ export default function Home() {
         {/* 3. CTA Button fades in after headline */}
         <CtaButton isReady={gridDrawn} />
 
-        {/* 4. Ambient continuous printer ribbon loops */}
-        <PaperConveyor speed={8} />
+        {/* 4. Printer continuously feeds warped, healed paper across the screen */}
+        <PrinterPaperFlow />
       </section>
 
       {/* --- PHASE 2 SECTIONS --- */}
