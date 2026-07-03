@@ -81,7 +81,7 @@ export function PaperConveyor({
           }}
         >
           <div
-            className="relative flex flex-col items-center justify-center p-0 m-0"
+            className="relative flex flex-col items-center justify-center px-3 py-2"
             style={{
               backgroundColor: "var(--color-accent, #506E7B)", 
               transform: "scaleY(1.1)", // slightly taller to match the condensed look
@@ -90,7 +90,7 @@ export function PaperConveyor({
             {queueLines.map((text, i) => (
               <div
                 key={i}
-                className="font-bebas text-black tracking-tight leading-[0.75] text-[1.2rem] md:text-[1.6rem] font-bold text-center w-full m-0 p-0"
+                className="font-bebas text-black tracking-tight leading-[0.85] text-[1.2rem] md:text-[1.6rem] font-bold text-center w-full m-0 p-0"
                 style={{ opacity: 1 - i * 0.03 }}
               >
                 {text}

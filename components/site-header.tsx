@@ -30,7 +30,7 @@ export function SiteHeader() {
         scrolled ? "bg-ink" : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1440px] mx-auto px-[max(6vw,24px)] md:px-[min(6vw,96px)] h-24 flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 h-24 flex items-center justify-between">
         <Link 
           href="/" 
           className="flex flex-col items-end focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
@@ -51,7 +51,7 @@ export function SiteHeader() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`font-bebas text-sm tracking-[0.15em] transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 ${
+                className={`font-bebas text-base md:text-lg tracking-[0.15em] transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 ${
                   isActive ? "text-accent" : "text-rose hover:text-accent"
                 }`}
               >

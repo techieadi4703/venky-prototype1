@@ -9,6 +9,12 @@
   --color-logo-grey: #898383;
   --color-body-grey: #606161;
   --color-panel: #1F1F24;
+  --color-folder-face: #333333;
+  --color-folder-edge: #6C6862;
+  --color-folder-outline: #808181;
+  --color-node-inactive: #808181;
+  --color-node-line: #4E4E4E;
+  --color-tile-frame: #606161;
   
   --font-bebas: var(--font-bebas-neue);
   --font-oswald: var(--font-oswald);
@@ -26,6 +32,12 @@
   --logo-grey: #898383;
   --body-grey: #606161;
   --panel: #1F1F24;
+  --folder-face: #333333;
+  --folder-edge: #6C6862;
+  --folder-outline: #808181;
+  --node-inactive: #808181;
+  --node-line: #4E4E4E;
+  --tile-frame: #606161;
 }
 
 body {

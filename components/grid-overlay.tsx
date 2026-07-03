@@ -1,11 +1,39 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { MO_CONFIG, isReducedMotion } from "@/lib/motion";
 
 export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [verticalLines, setVerticalLines] = useState([
+    "16%", "53%", "74.3%", "91%"
+  ]);
+
+  useEffect(() => {
+    const updatePositions = () => {
+      const navLinks = document.querySelectorAll("header nav.hidden.md\\:flex a");
+      if (navLinks.length >= 4) {
+        const ww = window.innerWidth;
+        setVerticalLines([
+          "16%",
+          `${(navLinks[0].getBoundingClientRect().left / ww) * 100}%`,
+          `${(navLinks[2].getBoundingClientRect().left / ww) * 100}%`,
+          `${(navLinks[3].getBoundingClientRect().left / ww) * 100}%`,
+        ]);
+      }
+    };
+
+    updatePositions();
+    window.addEventListener("resize", updatePositions);
+    // Initial delay in case fonts/layout shift on load
+    const timeout = setTimeout(updatePositions, 100);
+
+    return () => {
+      window.removeEventListener("resize", updatePositions);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -45,31 +73,35 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
         xmlns="http://www.w3.org/2000/svg"
       >
         <g stroke="var(--color-accent)" strokeWidth="1" opacity="0.4">
-          {/* === VERTICAL LINES === */}
-          {/* Col 1 — right of Healing Tool (~16%) */}
-          <line x1="16%" y1="0" x2="16%" y2="100%" />
+          {/* === VERTICAL LINES (Double lines with 4px gap) === */}
+          {/* Col 1 */}
+          <line x1={`calc(${verticalLines[0]}% - 2px)`} y1="0" x2={`calc(${verticalLines[0]}% - 2px)`} y2="100%" />
+          <line x1={`calc(${verticalLines[0]}% + 2px)`} y1="0" x2={`calc(${verticalLines[0]}% + 2px)`} y2="100%" />
           
-          {/* Col 2 — left of 30 YEARS block (~52%) */}
-          <line x1="52%" y1="0" x2="52%" y2="100%" />
+          {/* Col 2 (Left of HOME) - Stops at H3 */}
+          <line x1={`calc(${verticalLines[1]}% - 2px)`} y1="0" x2={`calc(${verticalLines[1]}% - 2px)`} y2="49.4%" />
+          <line x1={`calc(${verticalLines[1]}% + 2px)`} y1="0" x2={`calc(${verticalLines[1]}% + 2px)`} y2="49.4%" />
           
-          {/* Col 3 — right of GET STARTED button (~75%) */}
-          <line x1="75%" y1="0" x2="75%" y2="100%" />
+          {/* Col 3 (Left of OUR WORK) - Stops at H3 */}
+          <line x1={`calc(${verticalLines[2]}% - 2px)`} y1="0" x2={`calc(${verticalLines[2]}% - 2px)`} y2="49.4%" />
+          <line x1={`calc(${verticalLines[2]}% + 2px)`} y1="0" x2={`calc(${verticalLines[2]}% + 2px)`} y2="49.4%" />
           
-          {/* Col 4 — left of CONTACT US, cutting right side of printer (~91%) */}
-          <line x1="91%" y1="0" x2="91%" y2="100%" />
+          {/* Col 4 (Right of CONTACT US) - Stops at H3 */}
+          <line x1={`calc(${verticalLines[3]}% - 2px)`} y1="0" x2={`calc(${verticalLines[3]}% - 2px)`} y2="49.4%" />
+          <line x1={`calc(${verticalLines[3]}% + 2px)`} y1="0" x2={`calc(${verticalLines[3]}% + 2px)`} y2="49.4%" />
 
-          {/* === HORIZONTAL LINES === */}
-          {/* Row 1 — below Header / Top Nav (~18%) */}
-          <line x1="0" y1="18%" x2="100%" y2="18%" />
+          {/* === HORIZONTAL LINES (Double lines with 4px gap) === */}
+          {/* Row 1 (Below Header) */}
+          <line x1="0" y1="calc(18.5% - 2px)" x2="100%" y2="calc(18.5% - 2px)" />
+          <line x1="0" y1="calc(18.5% + 2px)" x2="100%" y2="calc(18.5% + 2px)" />
 
-          {/* Row 2 — above GET STARTED button (~42%) */}
-          <line x1="0" y1="42%" x2="100%" y2="42%" />
+          {/* Row 2 (Above CTA) - Ends at V3 (Left of OUR WORK) */}
+          <line x1="0" y1="calc(39.4% - 2px)" x2={`calc(${verticalLines[2]}% + 2px)`} y2="calc(39.4% - 2px)" />
+          <line x1="0" y1="calc(39.4% + 2px)" x2={`calc(${verticalLines[2]}% + 2px)`} y2="calc(39.4% + 2px)" />
 
-          {/* Row 3 — below GET STARTED button, resting line for printer (~53%) */}
-          <line x1="0" y1="53%" x2="100%" y2="53%" />
-          
-          {/* Row 4 — passing through lower section of printer output (~65%) */}
-          <line x1="0" y1="65%" x2="100%" y2="65%" />
+          {/* Row 3 (Below CTA, crossing printer) - Full Width */}
+          <line x1="0" y1="calc(49.4% - 2px)" x2="100%" y2="calc(49.4% - 2px)" />
+          <line x1="0" y1="calc(49.4% + 2px)" x2="100%" y2="calc(49.4% + 2px)" />
         </g>
       </svg>
     </div>
