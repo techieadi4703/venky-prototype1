@@ -44,38 +44,32 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
         className="w-full h-full" 
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g stroke="var(--color-accent)" strokeWidth="0.5" opacity="0.25">
-          {/* === VERTICAL LINES (paired as thin columns) === */}
-          
-          {/* Col 1 — left of logo area (~15%) */}
-          <line x1="15%" y1="0" x2="15%" y2="100%" />
+        <g stroke="var(--color-accent)" strokeWidth="1" opacity="0.4">
+          {/* === VERTICAL LINES === */}
+          {/* Col 1 — right of Healing Tool (~16%) */}
           <line x1="16%" y1="0" x2="16%" y2="100%" />
           
-          {/* Col 2 — between logo and content (~40%) */}
-          <line x1="40%" y1="0" x2="40%" y2="100%" />
-          <line x1="41%" y1="0" x2="41%" y2="100%" />
+          {/* Col 2 — left of 30 YEARS block (~52%) */}
+          <line x1="52%" y1="0" x2="52%" y2="100%" />
           
-          {/* Col 3 — right of content block (~72%) */}
-          <line x1="72%" y1="0" x2="72%" y2="100%" />
-          <line x1="73%" y1="0" x2="73%" y2="100%" />
+          {/* Col 3 — right of GET STARTED button (~75%) */}
+          <line x1="75%" y1="0" x2="75%" y2="100%" />
           
-          {/* Col 4 — right side, near printer (~90%) */}
-          <line x1="90%" y1="0" x2="90%" y2="100%" />
+          {/* Col 4 — left of CONTACT US, cutting right side of printer (~91%) */}
           <line x1="91%" y1="0" x2="91%" y2="100%" />
 
-          {/* === HORIZONTAL LINES (paired as thin rows) === */}
+          {/* === HORIZONTAL LINES === */}
+          {/* Row 1 — below Header / Top Nav (~18%) */}
+          <line x1="0" y1="18%" x2="100%" y2="18%" />
+
+          {/* Row 2 — above GET STARTED button (~42%) */}
+          <line x1="0" y1="42%" x2="100%" y2="42%" />
+
+          {/* Row 3 — below GET STARTED button, resting line for printer (~53%) */}
+          <line x1="0" y1="53%" x2="100%" y2="53%" />
           
-          {/* Row 1 — below header / above "30" (~15%) */}
-          <line x1="0" y1="15%" x2="100%" y2="15%" />
-          <line x1="0" y1="16%" x2="100%" y2="16%" />
-
-          {/* Row 2 — below "FLAWLESS..." / above "GET STARTED" (~46%) */}
-          <line x1="0" y1="46%" x2="100%" y2="46%" />
-          <line x1="0" y1="47%" x2="100%" y2="47%" />
-
-          {/* Row 3 — below CTA / through printer area (~62%) */}
-          <line x1="0" y1="62%" x2="100%" y2="62%" />
-          <line x1="0" y1="63%" x2="100%" y2="63%" />
+          {/* Row 4 — passing through lower section of printer output (~65%) */}
+          <line x1="0" y1="65%" x2="100%" y2="65%" />
         </g>
       </svg>
     </div>

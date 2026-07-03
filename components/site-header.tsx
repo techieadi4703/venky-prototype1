@@ -33,12 +33,12 @@ export function SiteHeader() {
       <div className="max-w-[1440px] mx-auto px-[max(6vw,24px)] md:px-[min(6vw,96px)] h-24 flex items-center justify-between">
         <Link 
           href="/" 
-          className="flex flex-col items-start focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+          className="flex flex-col items-end focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
         >
-          <span className="text-logo-grey font-bebas text-3xl md:text-4xl leading-none tracking-wide">
+          <span className="text-logo-grey font-oswald font-bold text-4xl md:text-[2.75rem] leading-none tracking-tight">
             Healing Tool
           </span>
-          <span className="text-logo-grey font-oswald text-sm md:text-base leading-none mt-1">
+          <span className="text-logo-grey/80 font-oswald font-light text-sm md:text-[0.9rem] leading-none mt-1 tracking-wide">
             Get your imagination
           </span>
         </Link>

@@ -10,22 +10,20 @@ export interface PaperConveyorProps {
 const UNIT_HEIGHT = 800; // height of one complete repeating texture unit
 
 const PaperUnit = ({ sheetImages }: { sheetImages: string[] }) => (
-  <div className="w-full flex flex-col" style={{ height: `${UNIT_HEIGHT}px` }}>
+  <div className="w-full flex flex-col justify-between" style={{ height: `${UNIT_HEIGHT}px` }}>
     {Array.from({ length: 8 }).map((_, i) => {
-      // Very subtle alternating shades for the folds, matching the clean flat look of the screenshot
-      const gradient = i % 2 === 0
-        ? "linear-gradient(to bottom, #a68a80 0%, #a0837a 100%)"
-        : "linear-gradient(to bottom, #a0837a 0%, #a68a80 100%)";
+      // Use the rose color from the palette to match the image
+      const gradient = "linear-gradient(to bottom, #A98A86 0%, #9B7D79 100%)";
 
       return (
         <div
           key={i}
-          className="w-full relative shrink-0"
+          className="w-full relative shrink-0 overflow-hidden"
           style={{
-            height: `${UNIT_HEIGHT / 8}px`,
+            height: `calc(12.5% - 12px)`, // Creates a gap between sheets
             background: gradient,
-            // Subtle horizontal crease line to show motion
-            boxShadow: i % 2 === 0 ? "inset 0 10px 15px -10px rgba(0,0,0,0.15)" : "none",
+            // Subtle curve effect via box shadow
+            boxShadow: "inset 0 -10px 20px -10px rgba(0,0,0,0.2)",
           }}
         >
           {sheetImages[i] && (
@@ -79,21 +77,21 @@ export function PaperConveyor({
             left: "50%",
             transform: "translateX(-50%)",
             bottom: "55%", // Sits right on the middle ledge, covering the rear flap
-            width: "55%", 
+            width: "max-content", // Hug the text tightly
           }}
         >
           <div
-            className="w-full px-4 py-4 relative"
+            className="relative flex flex-col items-center justify-center p-0 m-0"
             style={{
-              backgroundColor: "var(--color-accent, #607d8b)", 
-              // Removed shadow to match the flat look in the screenshot
+              backgroundColor: "var(--color-accent, #506E7B)", 
+              transform: "scaleY(1.1)", // slightly taller to match the condensed look
             }}
           >
             {queueLines.map((text, i) => (
               <div
                 key={i}
-                className="font-bebas text-ink tracking-widest leading-[1.1] text-[1.2rem] md:text-[1.5rem] font-bold text-black text-center"
-                style={{ opacity: 1 - i * 0.02 }}
+                className="font-bebas text-black tracking-tight leading-[0.75] text-[1.2rem] md:text-[1.6rem] font-bold text-center w-full m-0 p-0"
+                style={{ opacity: 1 - i * 0.03 }}
               >
                 {text}
               </div>
@@ -124,17 +122,17 @@ export function PaperConveyor({
              top: "69%", // Matches the front output slot height
              left: "29%", // Matches the left edge of the front slot
              width: "42%", // Matches the width of the front slot
-             perspective: "800px",
+             perspective: "1000px",
              perspectiveOrigin: "top center",
           }}
         >
            <div 
              className="w-full relative overflow-hidden"
              style={{
-               height: "80vh", // Extends cleanly off the bottom of the screen
-               transform: "rotateX(45deg)", // Pivots the bottom towards the camera to create the flare!
+               height: "100vh", // Extends cleanly off the bottom of the screen
+               // The skew and rotation bend the path to the left like the U-shape in the design
+               transform: "rotateX(45deg) rotateZ(-15deg) skewX(-20deg) translateX(-10%)", 
                transformOrigin: "top center",
-               backgroundColor: "#a68a80", // Solid base color matching screenshot
                boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
              }}
            >
