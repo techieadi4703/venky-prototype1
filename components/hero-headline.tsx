@@ -41,7 +41,8 @@ export function HeroHeadline({ isReady }: { isReady: boolean }) {
   return (
     <div 
       ref={containerRef} 
-      className="absolute top-[18%] left-[42%] z-10 flex flex-col items-start"
+      className="absolute z-10 flex flex-col justify-center pl-[2%]"
+      style={{ left: '52%', width: '22%', top: '35%', height: '15%' }}
     >
       <div className="relative flex items-center font-bebas text-bone overflow-hidden">
         {/* The large '30' */}

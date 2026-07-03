@@ -35,14 +35,14 @@ const PRINTER_H = PRINTER.w / PRINTER_ASPECT;
 // { x, y, w } — w is the paper width (grows as it comes toward the viewer).
 const CTRL = [
   { x: 1262, y: 604, w: 58 }, // inside the slot
-  { x: 1180, y: 660, w: 80 }, // emerging down-left, growing faster
-  { x: 1050, y: 730, w: 120 }, 
-  { x: 880, y: 790, w: 160 }, 
-  { x: 650, y: 830, w: 200 }, // sweeping to horizontal
-  { x: 400, y: 810, w: 240 }, 
-  { x: 150, y: 750, w: 300 }, 
-  { x: -100, y: 600, w: 380 }, 
-  { x: -350, y: 350, w: 480 }, 
+  { x: 1180, y: 660, w: 70 }, // emerging down-left, growing faster
+  { x: 1050, y: 730, w: 90 }, 
+  { x: 880, y: 790, w: 120 }, 
+  { x: 650, y: 830, w: 160 }, 
+  { x: 400, y: 810, w: 200 }, 
+  { x: 150, y: 750, w: 250 }, 
+  { x: -100, y: 600, w: 310 }, 
+  { x: -350, y: 350, w: 380 }, 
 ];
 
 // ---- Build an arc-length sampled polyline from the control points -------
@@ -134,7 +134,7 @@ const TARGET_D = 140; // Exact spacing for guaranteed continuous overlap
 const N = Math.round(PATH_U_LEN / TARGET_D);
 const D = PATH_U_LEN / N; // exact spacing to make the loop perfectly seamless
 const FOLD_TILT = 13; // degrees; alternates +/- so sheets tent into folds
-const SPEED = 100; // virtual units / second
+const SPEED = 60; // virtual units / second
 
 // A gallery of "retouched" prints — each sheet keeps its photo for the whole
 // journey, so the loop stays seamless while still showing a mix of images.

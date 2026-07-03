@@ -61,14 +61,17 @@ export function CtaButton({ isReady }: { isReady: boolean }) {
   };
 
   return (
-    <div className="absolute top-[48%] left-[42%] z-10 flex">
+    <div 
+      className="absolute z-10"
+      style={{ left: '52%', width: '22%', top: '50%', height: '10%' }}
+    >
       <Link 
         href="/contact" 
         ref={buttonRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
-        className="bg-accent text-ink font-bebas text-xl md:text-3xl uppercase py-3 px-6 flex items-center gap-4 transition-colors hover:bg-[#6b8b9a] focus-visible:outline-2 focus-visible:outline-bone focus-visible:outline-offset-4"
+        className="w-full h-full bg-accent text-ink font-bebas text-xl md:text-3xl uppercase py-3 px-6 flex items-center justify-between transition-colors hover:bg-[#6b8b9a] focus-visible:outline-2 focus-visible:outline-bone focus-visible:outline-offset-4"
       >
         <span className="tracking-widest">GET STARTED</span>
         <div ref={arrowContainerRef} className="relative w-8 h-8 md:w-10 md:h-10 overflow-hidden flex items-center justify-center">
