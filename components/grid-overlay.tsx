@@ -55,6 +55,7 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
         <g stroke="var(--color-accent)" strokeWidth="1.5" opacity="0.8">
           {/* === VERTICAL LINES === */}
           {verticalLines.map((v, i) => {
+            // Last line (94%) is single
             if (i === verticalLines.length - 1) {
               return (
                 <g key={`v-${i}`}>
@@ -62,10 +63,14 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
                 </g>
               );
             }
+            
+            // The 74% vertical line (i === 2) stops at h4 (66%)
+            const yEnd = i === 2 ? `calc(${h4}% + 5px)` : `${h5}%`;
+            
             return (
               <g key={`v-${i}`}>
-                <line x1={`calc(${v} - 8px)`} y1="0" x2={`calc(${v} - 8px)`} y2={`${h5}%`} />
-                <line x1={`calc(${v} + 8px)`} y1="0" x2={`calc(${v} + 8px)`} y2={`${h5}%`} />
+                <line x1={`calc(${v} - 8px)`} y1="0" x2={`calc(${v} - 8px)`} y2={yEnd} />
+                <line x1={`calc(${v} + 8px)`} y1="0" x2={`calc(${v} + 8px)`} y2={yEnd} />
               </g>
             );
           })}
