@@ -35,13 +35,13 @@ const PRINTER_H = PRINTER.w / PRINTER_ASPECT;
 // { x, y, w } — w is the paper width (grows as it comes toward the viewer).
 const CTRL = [
   { x: 1238, y: 604, w: 58 }, // inside the slot
-  { x: 1156, y: 630, w: 70 }, // emerging down-left, shallower drop
-  { x: 1026, y: 670, w: 90 },
-  { x: 856, y: 710, w: 120 },
-  { x: 626, y: 740, w: 160 },
-  { x: 376, y: 720, w: 200 },
-  { x: 126, y: 650, w: 250 },
-  { x: -124, y: 500, w: 310 },
+  { x: 1156, y: 660, w: 70 }, // drops faster
+  { x: 1026, y: 720, w: 90 }, // steeper drop
+  { x: 856, y: 760, w: 120 }, // getting near bottom
+  { x: 626, y: 780, w: 160 }, // absolute lowest point
+  { x: 376, y: 740, w: 200 }, // starting to go up
+  { x: 126, y: 640, w: 250 }, // going up steeply
+  { x: -124, y: 480, w: 310 },
   { x: -374, y: 250, w: 380 },
 ];
 
