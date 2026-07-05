@@ -64,23 +64,25 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
             }
             return (
               <g key={`v-${i}`}>
-                <line x1={`calc(${v} - 3px)`} y1="0" x2={`calc(${v} - 3px)`} y2="100%" />
-                <line x1={`calc(${v} + 3px)`} y1="0" x2={`calc(${v} + 3px)`} y2="100%" />
+                <line x1={`calc(${v} - 5px)`} y1="0" x2={`calc(${v} - 5px)`} y2="100%" />
+                <line x1={`calc(${v} + 5px)`} y1="0" x2={`calc(${v} + 5px)`} y2="100%" />
               </g>
             );
           })}
 
-          {/* === HORIZONTAL LINES (Double lines with 6px gap) === */}
+          {/* === HORIZONTAL LINES (Double lines with 10px gap) === */}
           <g key="h-h3">
-            <line x1="0" y1={`calc(${h3}% - 3px)`} x2="74%" y2={`calc(${h3}% - 3px)`} />
-            <line x1="0" y1={`calc(${h3}% + 3px)`} x2="74%" y2={`calc(${h3}% + 3px)`} />
+            <line x1="0" y1={`calc(${h3}% - 5px)`} x2="74%" y2={`calc(${h3}% - 5px)`} />
+            <line x1="0" y1={`calc(${h3}% + 5px)`} x2="74%" y2={`calc(${h3}% + 5px)`} />
           </g>
-          {[h4, h5].map((h, i) => (
-            <g key={`h-${i + 1}`}>
-              <line x1="0" y1={`calc(${h}% - 3px)`} x2="100%" y2={`calc(${h}% - 3px)`} />
-              <line x1="0" y1={`calc(${h}% + 3px)`} x2="100%" y2={`calc(${h}% + 3px)`} />
-            </g>
-          ))}
+          <g key="h-h4">
+            <line x1="74%" y1={`calc(${h4}% - 5px)`} x2="100%" y2={`calc(${h4}% - 5px)`} />
+            <line x1="74%" y1={`calc(${h4}% + 5px)`} x2="100%" y2={`calc(${h4}% + 5px)`} />
+          </g>
+          <g key="h-h5">
+            <line x1="0" y1={`calc(${h5}% - 5px)`} x2="100%" y2={`calc(${h5}% - 5px)`} />
+            <line x1="0" y1={`calc(${h5}% + 5px)`} x2="100%" y2={`calc(${h5}% + 5px)`} />
+          </g>
         </g>
       </svg>
     </div>

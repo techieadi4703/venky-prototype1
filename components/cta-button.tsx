@@ -74,7 +74,7 @@ export function CtaButton({ isReady }: { isReady: boolean }) {
         className="w-[90%] h-[75%] bg-accent text-ink font-bebas text-3xl md:text-[2.75rem] uppercase py-2 px-6 flex items-center justify-between transition-colors hover:bg-[#6b8b9a] focus-visible:outline-2 focus-visible:outline-bone focus-visible:outline-offset-4 pointer-events-auto"
       >
         <span className="tracking-normal font-extrabold w-full text-center">GET STARTED</span>
-        <div ref={arrowContainerRef} className="relative w-8 h-8 md:w-10 md:h-10 overflow-hidden flex items-center justify-center">
+        <div ref={arrowContainerRef} className="relative w-12 h-12 md:w-14 md:h-14 overflow-hidden flex items-center justify-center">
           {/* Default state: down-right */}
           <svg className="arrow-rest absolute w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="square">
             <path d="M7 7l10 10M17 7v10H7" />

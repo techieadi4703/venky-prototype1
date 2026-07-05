@@ -285,14 +285,14 @@ export function PrinterPaperFlow() {
 
             {/* teal "GET YOUR IMAGINATION" sheet standing in the rear feed tray */}
             <g>
-              <rect x={1150} y={312} width={170} height={196} fill="var(--color-accent)" />
-              {Array.from({ length: QUEUE_LINES }).map((_, i) => (
+              <rect x={1165} y={360} width={134} height={133} fill="var(--color-accent)" />
+              {Array.from({ length: 8 }).map((_, i) => (
                 <text
                   key={i}
-                  x={1156}
-                  y={346 + i * 20}
+                  x={1171}
+                  y={375 + i * 16}
                   fontFamily="var(--font-anton), sans-serif"
-                  fontSize={19}
+                  fontSize={15}
                   letterSpacing={-0.1}
                   fill="#050607"
                 >
