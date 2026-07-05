@@ -13,13 +13,13 @@ const PATTERN_LINE = "GET YOUR IMAGINATION ".repeat(18);
 const PATTERN_ROWS = Array.from({ length: 13 }, (_, i) => 46 + i * 12);
 
 const PHOTOS = [
-  { src: "/images/jewelry_necklace.png", rot: -8, y: 4 },
-  { src: "/images/hero-ribbon-photo.png", rot: 6, y: 26 },
-  { src: "/images/watches_product.png", rot: -5, y: 40 },
-  { src: "/images/scooter_vehicle.png", rot: 7, y: 46 },
-  { src: "/images/portrait-man.png", rot: -6, y: 32 },
-  { src: "/images/portrait-woman.png", rot: 8, y: 16 },
-  { src: "/images/woman_saree.png", rot: -9, y: -4 },
+  { src: "/images/jewelry_necklace.png", rot: -25, y: 20 },
+  { src: "/images/hero-ribbon-photo.png", rot: 15, y: 60 },
+  { src: "/images/watches_product.png", rot: -10, y: 15 },
+  { src: "/images/scooter_vehicle.png", rot: 15, y: 50 },
+  { src: "/images/portrait-man.png", rot: -20, y: 20 },
+  { src: "/images/portrait-woman.png", rot: 25, y: 60 },
+  { src: "/images/woman_saree.png", rot: -30, y: -5 },
 ];
 
 export function GetYourImagination() {
@@ -64,71 +64,81 @@ export function GetYourImagination() {
           aria-label={TITLE}
         >
           <defs>
+            <filter id="ripped">
+              <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="5" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
             <clipPath id="gyi-clip">
               <text
                 x="700"
-                y="168"
+                y="154"
                 textAnchor="middle"
-                fontFamily="var(--font-anton), sans-serif"
-                fontSize="152"
-                letterSpacing="-1"
+                fontFamily="var(--font-bricolage), sans-serif"
+                fontWeight="900"
+                fontSize="140"
+                letterSpacing="-15"
               >
                 {TITLE}
               </text>
             </clipPath>
           </defs>
 
-          {/* faint repeating-text field behind the letters */}
-          <g opacity="0.07" fill="#5D7686">
-            {PATTERN_ROWS.map((y, i) => (
-              <text
-                key={i}
-                x={i % 2 ? -30 : -6}
-                y={y}
-                fontFamily="var(--font-anton), sans-serif"
-                fontSize="11"
-                letterSpacing="1.5"
-              >
-                {PATTERN_LINE}
-              </text>
-            ))}
-          </g>
-
-          {/* base slate fill of the big letters */}
+          {/* 1. Base dark teal background for the big letters (acts as the thick outline base) */}
           <text
             x="700"
-            y="168"
+            y="154"
             textAnchor="middle"
-            fontFamily="var(--font-anton), sans-serif"
-            fontSize="152"
-            letterSpacing="-1"
-            fill="#5D7686"
+            fontFamily="var(--font-bricolage), sans-serif"
+            fontWeight="900"
+            fontSize="140"
+            letterSpacing="-15"
+            fill="#324450"
+            stroke="#324450"
+            strokeWidth="4"
           >
             {TITLE}
           </text>
 
-          {/* darker repeating text clipped INSIDE the letters */}
-          <g clipPath="url(#gyi-clip)" opacity="0.85">
+          {/* 2. Black patterned text clipped to the big letters, providing texture to the outline */}
+          <g clipPath="url(#gyi-clip)" opacity="1">
             {PATTERN_ROWS.map((y, i) => (
               <text
                 key={i}
                 x={i % 2 ? -30 : -6}
                 y={y}
-                fontFamily="var(--font-anton), sans-serif"
-                fontSize="11"
-                letterSpacing="1.5"
-                fill="#141f26"
+                fontFamily="var(--font-bricolage), sans-serif"
+                fontWeight="900"
+                fontSize="13"
+                letterSpacing="-0.5"
+                fill="#000000"
               >
                 {PATTERN_LINE}
               </text>
             ))}
           </g>
+
+          {/* 3. The overlapping illusion! Slightly smaller solid light teal text on top to hide the center of the pattern */}
+          <text
+            x="700"
+            y="160"
+            textAnchor="middle"
+            fontFamily="var(--font-bricolage), sans-serif"
+            fontWeight="900"
+            fontSize="124"
+            letterSpacing="-5.5"
+            fill="#5E7D8F"
+            stroke="#5E7D8F"
+            strokeWidth="4"
+            transform="scale(1, 0.96)"
+          >
+            {TITLE}
+          </text>
         </svg>
 
         {/* ---- Photo fan ---- */}
-        <div className="mt-10 md:mt-16 w-full flex justify-center items-start gap-2 md:gap-3">
+        <div className="mt-10 md:mt-16 w-full flex justify-center items-start gap-4 md:gap-6">
           {PHOTOS.map((p, i) => (
-            <div key={i} className="gyi-photo relative w-[13%] max-w-[190px]">
+            <div key={i} className="gyi-photo relative w-[12%] max-w-[175px]">
               <div
                 className="relative"
                 style={{ transform: `translateY(${p.y}px) rotate(${p.rot}deg)` }}
@@ -144,16 +154,32 @@ export function GetYourImagination() {
                     sizes="(max-width: 768px) 40vw, 190px"
                     className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                   />
+                  {/* Ripped black frame overlay */}
+                  <div
+                    className="absolute pointer-events-none"
+                    style={{
+                      top: "-20px",
+                      left: "-20px",
+                      right: "-20px",
+                      bottom: "-20px",
+                      border: "26px solid #000000",
+                      filter: "url(#ripped)",
+                    }}
+                  />
                 </div>
 
                 {/* teal sparks on the last photo */}
                 {i === PHOTOS.length - 1 && (
                   <>
-                    <span className="gyi-spark absolute -top-5 right-8 w-[5px] h-6 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(-28deg)" }} />
-                    <span className="gyi-spark absolute -top-9 right-1 w-[7px] h-9 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(12deg)" }} />
-                    <span className="gyi-spark absolute -top-5 -right-5 w-[5px] h-6 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(52deg)" }} />
-                    <span className="gyi-spark absolute -bottom-5 -right-4 w-[5px] h-6 bg-accent" style={{ clipPath: "polygon(30% 0,70% 0,100% 100%,0 100%)", transform: "rotate(-40deg)" }} />
-                    <span className="gyi-spark absolute -bottom-9 right-3 w-[7px] h-9 bg-accent" style={{ clipPath: "polygon(30% 0,70% 0,100% 100%,0 100%)", transform: "rotate(10deg)" }} />
+                    {/* Top right sparks (mirrored from bottom left) */}
+                    <span className="gyi-spark absolute -top-4 -right-7 w-[5px] h-7 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(75deg)" }} />
+                    <span className="gyi-spark absolute -top-9 -right-4 w-[6px] h-8 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(40deg)" }} />
+                    <span className="gyi-spark absolute -top-11 right-0 w-[5px] h-6 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(15deg)" }} />
+                    
+                    {/* Bottom left sparks */}
+                    <span className="gyi-spark absolute -bottom-4 -left-7 w-[5px] h-7 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(-105deg)" }} />
+                    <span className="gyi-spark absolute -bottom-9 -left-4 w-[6px] h-8 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(-140deg)" }} />
+                    <span className="gyi-spark absolute -bottom-11 left-0 w-[5px] h-6 bg-accent" style={{ clipPath: "polygon(0 0,100% 0,70% 100%,30% 100%)", transform: "rotate(-165deg)" }} />
                   </>
                 )}
               </div>

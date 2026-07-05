@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Oswald, Anton } from "next/font/google";
+import { Bebas_Neue, Oswald, Anton, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 
@@ -22,6 +22,11 @@ const anton = Anton({
   weight: "400",
 });
 
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Healing Tool",
   description: "Get your imagination. 30 Years Experts — Flawless retouch to print.",
@@ -34,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bebasNeue.variable} ${oswald.variable} ${anton.variable} antialiased selection:bg-accent selection:text-ink`}>
+      <body className={`${bebasNeue.variable} ${oswald.variable} ${anton.variable} ${bricolage.variable} antialiased selection:bg-accent selection:text-ink`}>
         <SiteHeader />
         <main>{children}</main>
       </body>
