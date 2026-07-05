@@ -191,13 +191,13 @@ export function PrinterPaperFlow() {
       // Update the clip-path cutting the corner
       const clipPoly = document.getElementById(`poly-clip-${k}`);
       if (clipPoly) {
-        clipPoly.setAttribute("points", `${-L / 2},${-H / 2} ${L / 2},${-H / 2} ${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${-L / 2},${H / 2}`);
+        clipPoly.setAttribute("points", `${-L / 2},${-H / 2} ${L / 2 - F},${-H / 2} ${L / 2},${-H / 2 + F} ${L / 2},${H / 2} ${-L / 2},${H / 2}`);
       }
 
       // Update the folded flap triangle
       const flapPoly = document.getElementById(`poly-flap-${k}`);
       if (flapPoly) {
-        flapPoly.setAttribute("points", `${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${L / 2 - F},${H / 2 - F}`);
+        flapPoly.setAttribute("points", `${L / 2 - F},${-H / 2} ${L / 2},${-H / 2 + F} ${L / 2 - F},${-H / 2 + F}`);
         flapPoly.style.opacity = F > 1 ? "1" : "0";
       }
 
@@ -256,11 +256,6 @@ export function PrinterPaperFlow() {
               <stop offset="0.5" stopColor="#ffffff" stopOpacity="0" />
               <stop offset="1" stopColor="#000000" stopOpacity="0.34" />
             </linearGradient>
-            {/* fold shadow along the leading edge of each sheet */}
-            <linearGradient id="ppf-fold" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stopColor="#000000" stopOpacity="0.55" />
-              <stop offset="0.18" stopColor="#000000" stopOpacity="0" />
-            </linearGradient>
             {/* drop shadow so each sheet reads as a separate physical print */}
             <filter id="ppf-drop" x="-20%" y="-20%" width="140%" height="140%">
               <feDropShadow dx="0" dy="7" stdDeviation="6" floodColor="#000" floodOpacity="0.55" />
@@ -316,8 +311,8 @@ export function PrinterPaperFlow() {
                 foldAmt = Math.sin(((progress - 0.1) / 0.8) * Math.PI);
               }
               const F = 50 * foldAmt;
-              const clipPoints = `${-L / 2},${-H / 2} ${L / 2},${-H / 2} ${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${-L / 2},${H / 2}`;
-              const flapPoints = `${L / 2},${H / 2 - F} ${L / 2 - F},${H / 2} ${L / 2 - F},${H / 2 - F}`;
+              const clipPoints = `${-L / 2},${-H / 2} ${L / 2 - F},${-H / 2} ${L / 2},${-H / 2 + F} ${L / 2},${H / 2} ${-L / 2},${H / 2}`;
+              const flapPoints = `${L / 2 - F},${-H / 2} ${L / 2},${-H / 2 + F} ${L / 2 - F},${-H / 2 + F}`;
 
               return (
                 <g
@@ -343,8 +338,6 @@ export function PrinterPaperFlow() {
                     />
                     <rect x={-L / 2} y={-H / 2} width={L} height={H} fill="url(#ppf-tint)" />
                     <rect x={-L / 2} y={-H / 2} width={L} height={H} fill="url(#ppf-sheen)" />
-                    {/* crease shadow on the leading (printer-side) edge */}
-                    <rect x={L / 2 - L * 0.18} y={-H / 2} width={L * 0.18} height={H} fill="url(#ppf-fold)" />
                     {/* crisp paper edge */}
                     <rect
                       x={-L / 2}
