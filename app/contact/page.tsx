@@ -25,7 +25,7 @@ export default function ContactPage() {
       {/* Signature */}
       <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 pointer-events-auto opacity-30 hover:opacity-100 transition-opacity">
         <p className="font-sans text-[8px] md:text-[10px] text-bone tracking-widest uppercase">
-          made by-techieadi4703
+          made by-techieadi4703🧿
         </p>
       </div>
     </div>
