@@ -6,13 +6,13 @@ import { MO_CONFIG, isReducedMotion } from "@/lib/motion";
 
 export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const verticalLines = ["16%", "52%", "74%", "96%"];
+  const verticalLines = ["16%", "52%", "74%", "94%"];
 
   // H-lines (in %)
   const h1 = 15; // Below Header
   const h3 = 41; // Below Headline, Above CTA
   const h4 = 66; // Below CTA
-  const h5 = 85; // Bottom
+  const h5 = 88; // Bottom
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -52,36 +52,35 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
         xmlns="http://www.w3.org/2000/svg"
       >
         {/* Use the exact color from the screenshot: #506E7B (accent) but with high opacity to match */}
-        <g stroke="var(--color-accent)" strokeWidth="1" opacity="0.6">
+        <g stroke="var(--color-accent)" strokeWidth="1.5" opacity="0.8">
           {/* === VERTICAL LINES === */}
           {verticalLines.map((v, i) => {
             if (i === verticalLines.length - 1) {
               return (
                 <g key={`v-${i}`}>
-                  <line x1={v} y1="0" x2={v} y2="100%" />
+                  <line x1={v} y1="0" x2={v} y2={`${h5}%`} />
                 </g>
               );
             }
             return (
               <g key={`v-${i}`}>
-                <line x1={`calc(${v} - 5px)`} y1="0" x2={`calc(${v} - 5px)`} y2="100%" />
-                <line x1={`calc(${v} + 5px)`} y1="0" x2={`calc(${v} + 5px)`} y2="100%" />
+                <line x1={`calc(${v} - 8px)`} y1="0" x2={`calc(${v} - 8px)`} y2={`${h5}%`} />
+                <line x1={`calc(${v} + 8px)`} y1="0" x2={`calc(${v} + 8px)`} y2={`${h5}%`} />
               </g>
             );
           })}
 
           {/* === HORIZONTAL LINES (Double lines with 10px gap) === */}
           <g key="h-h3">
-            <line x1="0" y1={`calc(${h3}% - 5px)`} x2="74%" y2={`calc(${h3}% - 5px)`} />
-            <line x1="0" y1={`calc(${h3}% + 5px)`} x2="74%" y2={`calc(${h3}% + 5px)`} />
+            <line x1="0" y1={`calc(${h3}% - 5px)`} x2="calc(74% + 8px)" y2={`calc(${h3}% - 5px)`} />
+            <line x1="0" y1={`calc(${h3}% + 5px)`} x2="calc(74% + 8px)" y2={`calc(${h3}% + 5px)`} />
           </g>
           <g key="h-h4">
-            <line x1="74%" y1={`calc(${h4}% - 5px)`} x2="100%" y2={`calc(${h4}% - 5px)`} />
-            <line x1="74%" y1={`calc(${h4}% + 5px)`} x2="100%" y2={`calc(${h4}% + 5px)`} />
+            <line x1="69%" y1={`calc(${h4}% - 5px)`} x2="100%" y2={`calc(${h4}% - 5px)`} />
+            <line x1="69%" y1={`calc(${h4}% + 5px)`} x2="100%" y2={`calc(${h4}% + 5px)`} />
           </g>
           <g key="h-h5">
-            <line x1="0" y1={`calc(${h5}% - 5px)`} x2="30%" y2={`calc(${h5}% - 5px)`} />
-            <line x1="0" y1={`calc(${h5}% + 5px)`} x2="30%" y2={`calc(${h5}% + 5px)`} />
+            <line x1="0" y1={`${h5}%`} x2="100%" y2={`${h5}%`} />
           </g>
         </g>
       </svg>
