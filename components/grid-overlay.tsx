@@ -80,8 +80,8 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
             <line x1="74%" y1={`calc(${h4}% + 5px)`} x2="100%" y2={`calc(${h4}% + 5px)`} />
           </g>
           <g key="h-h5">
-            <line x1="0" y1={`calc(${h5}% - 5px)`} x2="100%" y2={`calc(${h5}% - 5px)`} />
-            <line x1="0" y1={`calc(${h5}% + 5px)`} x2="100%" y2={`calc(${h5}% + 5px)`} />
+            <line x1="0" y1={`calc(${h5}% - 5px)`} x2="30%" y2={`calc(${h5}% - 5px)`} />
+            <line x1="0" y1={`calc(${h5}% + 5px)`} x2="30%" y2={`calc(${h5}% + 5px)`} />
           </g>
         </g>
       </svg>
