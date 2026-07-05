@@ -38,17 +38,16 @@ export function WhyChooseUs() {
 
       // Parallax scatter animation for images
       const parallaxSpeeds = [
-        { selector: ".parallax-img-1", y: -150, x: -100, rotation: -5 }, // BBQ - up and left, slight rotate
-        { selector: ".parallax-img-2", y: -800, x: 50, rotation: 10 },  // Qubz - very fast up and right
-        { selector: ".parallax-img-3", y: 300, x: 250, rotation: -15 },  // Sari - down and right
-        { selector: ".parallax-img-4", y: -200, x: 150, rotation: 5 },   // Jewelry - up and right
+        { selector: ".parallax-img-1", y: 0, x: -300 }, // Top-left - moves LEFT
+        { selector: ".parallax-img-2", y: -500, x: 0 }, // Top-right - moves UP
+        { selector: ".parallax-img-3", y: 400, x: 0 },  // Bottom-left - moves DOWN
+        { selector: ".parallax-img-4", y: 0, x: 300 },  // Bottom-right - moves RIGHT
       ];
 
-      parallaxSpeeds.forEach(({ selector, y, x, rotation }) => {
+      parallaxSpeeds.forEach(({ selector, y, x }) => {
         gsap.to(selector, {
           y: y,
           x: x,
-          rotation: rotation,
           ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -66,34 +65,42 @@ export function WhyChooseUs() {
 
   // Grid Horizontal Lines
   const H1 = 300;
-  const H2 = 550;
-  const H3 = 850;
+  const H2 = 620;
+  const H3 = 910;
 
   return (
     <section 
       ref={containerRef}
-      className="w-full h-[950px] relative bg-ink"
+      className="w-full h-[1100px] relative bg-ink"
     >
       {/* Grid Lines */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="var(--color-accent)" strokeWidth="1" opacity="0.4">
+        <g stroke="var(--color-accent)" strokeWidth="1.5" opacity="0.8">
           {/* Horizontal Lines */}
-          <line x1="0" y1={H1 - 2} x2="100%" y2={H1 - 2} />
-          <line x1="0" y1={H1 + 2} x2="100%" y2={H1 + 2} />
+          <line x1="0" y1={H1 - 5} x2={vLines[3]} y2={H1 - 5} />
+          <line x1="0" y1={H1 + 5} x2={vLines[3]} y2={H1 + 5} />
           
-          <line x1="0" y1={H2 - 2} x2="100%" y2={H2 - 2} />
-          <line x1="0" y1={H2 + 2} x2="100%" y2={H2 + 2} />
+          <line x1={`calc(${vLines[1]} + 8px)`} y1={H2 - 5} x2={vLines[3]} y2={H2 - 5} />
+          <line x1={`calc(${vLines[1]} + 8px)`} y1={H2 + 5} x2={vLines[3]} y2={H2 + 5} />
 
-          <line x1="0" y1={H3 - 2} x2="100%" y2={H3 - 2} />
-          <line x1="0" y1={H3 + 2} x2="100%" y2={H3 + 2} />
+          <line x1="0" y1={H3} x2="100%" y2={H3} />
 
           {/* Vertical Lines (Only draw the last 3, ignoring the left-most margin) */}
-          {vLines.slice(1).map((v: string, i: number) => (
-            <g key={i}>
-              <line x1={`calc(${v} - 2px)`} y1="0" x2={`calc(${v} - 2px)`} y2="100%" />
-              <line x1={`calc(${v} + 2px)`} y1="0" x2={`calc(${v} + 2px)`} y2="100%" />
-            </g>
-          ))}
+          {vLines.slice(1).map((v: string, i: number, arr) => {
+            if (i === arr.length - 1) {
+              return (
+                <g key={i}>
+                  <line x1={v} y1="0" x2={v} y2="100%" />
+                </g>
+              );
+            }
+            return (
+              <g key={i}>
+                <line x1={`calc(${v} - 8px)`} y1="0" x2={`calc(${v} - 8px)`} y2="100%" />
+                <line x1={`calc(${v} + 8px)`} y1="0" x2={`calc(${v} + 8px)`} y2="100%" />
+              </g>
+            );
+          })}
         </g>
       </svg>
 
@@ -102,18 +109,18 @@ export function WhyChooseUs() {
         
         {/* Title */}
         <div 
-          className="absolute flex items-center justify-center fade-up pointer-events-auto" 
-          style={{ top: 0, height: H1 - 2, left: 0, width: `calc(${vLines[1]} - 2px)` }}
+          className="absolute flex items-end justify-center pb-6 fade-up pointer-events-auto" 
+          style={{ top: 0, height: H1 - 5, left: 0, width: `calc(${vLines[1]} - 8px)` }}
         >
           <h2 className="font-bebas text-bone text-4xl md:text-[3rem] tracking-wide uppercase">
             Why Choose Us
           </h2>
         </div>
 
-        {/* Reasons Row 1 */}
+        {/* Reasons (All 4 paragraphs) */}
         <div 
-          className="absolute flex items-center px-8 lg:px-16 md:pl-[max(6vw,24px)] fade-up pointer-events-auto" 
-          style={{ top: H1 + 2, height: H2 - H1 - 4, left: 0, width: `calc(${vLines[1]} - 2px)` }}
+          className="absolute flex flex-col pt-24 gap-y-16 px-8 lg:px-16 md:pl-[max(6vw,24px)] fade-up pointer-events-auto" 
+          style={{ top: H1, left: 0, width: `calc(${vLines[1]} - 8px)` }}
         >
           <div className="grid grid-cols-2 gap-x-12 w-full">
             <p className="font-bebas text-[#7C93A3] text-[13px] md:text-[15px] leading-[1.6] tracking-wider text-balance opacity-80 uppercase">
@@ -123,13 +130,6 @@ export function WhyChooseUs() {
               {reasons[1]}
             </p>
           </div>
-        </div>
-
-        {/* Reasons Row 2 */}
-        <div 
-          className="absolute flex items-center px-8 lg:px-16 md:pl-[max(6vw,24px)] fade-up pointer-events-auto" 
-          style={{ top: H2 + 2, height: H3 - H2 - 4, left: 0, width: `calc(${vLines[1]} - 2px)` }}
-        >
           <div className="grid grid-cols-2 gap-x-12 w-full">
             <p className="font-bebas text-[#7C93A3] text-[13px] md:text-[15px] leading-[1.6] tracking-wider text-balance opacity-80 uppercase">
               {reasons[2]}
@@ -141,43 +141,43 @@ export function WhyChooseUs() {
         </div>
 
         {/* Images */}
-        {/* BBQ - top left (V2-V3, Above H1) */}
+        {/* BBQ - top left (V1-V2) */}
         <div 
-          className="absolute fade-up pointer-events-auto parallax-img-1 z-20" 
-          style={{ top: H1 - 200, height: 198, left: `calc(${vLines[1]} + 2px)`, width: `calc(${vLines[2]} - ${vLines[1]} - 4px)` }}
+          className="absolute fade-up pointer-events-auto z-20" 
+          style={{ top: 250, height: 220, left: `calc(${vLines[1]} - 8px)`, width: `calc(${vLines[2]} - ${vLines[1]})` }}
         >
-          <div className="relative w-full h-full overflow-hidden">
+          <div className="parallax-img-1 relative w-full h-full overflow-hidden">
              <Image src="/images/hero-ribbon-photo.png" alt="BBQ" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
           </div>
         </div>
 
-        {/* Qubz - top right (V3-V4, Above H2) */}
+        {/* Qubz - top right (V2-V3) */}
         <div 
-          className="absolute fade-up pointer-events-auto parallax-img-2 z-20" 
-          style={{ top: H1 - 200, height: H2 - (H1 - 200) - 2, left: `calc(${vLines[2]} + 2px)`, width: `calc(${vLines[3]} - ${vLines[2]} - 4px)` }}
+          className="absolute fade-up pointer-events-auto z-20" 
+          style={{ top: 250, height: 380, left: `calc(${vLines[2]} + 8px)`, width: `calc(${vLines[3]} - ${vLines[2]} - 8px)` }}
         >
-          <div className="relative w-full h-full overflow-hidden">
+          <div className="parallax-img-2 relative w-full h-full overflow-hidden">
              <Image src="/images/hero-ribbon-photo.png" alt="Qubz" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
           </div>
         </div>
 
-        {/* Sari - bottom left (V2-V3, H1 to H3) */}
+        {/* Sari - bottom left (V1-V2) */}
         <div 
-          className="absolute fade-up pointer-events-auto parallax-img-3 z-20" 
-          style={{ top: H1 + 2, height: H3 - H1 - 4, left: `calc(${vLines[1]} + 2px)`, width: `calc(${vLines[2]} - ${vLines[1]} - 4px)` }}
+          className="absolute fade-up pointer-events-auto z-20" 
+          style={{ top: H1 + 230, height: 280, left: `calc(${vLines[1]} - 8px)`, width: `calc(${vLines[2]} - ${vLines[1]})` }}
         >
-          <div className="relative w-full h-full overflow-hidden">
-             <Image src="/images/hero-ribbon-photo.png" alt="Sari" fill className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
+          <div className="parallax-img-3 relative w-full h-full overflow-hidden">
+             <Image src="/images/woman_saree.png" alt="Sari" fill className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
           </div>
         </div>
 
-        {/* Jewelry - bottom right (V3-V4, H2 to H3) */}
+        {/* Jewelry - bottom right (V2-V3) */}
         <div 
-          className="absolute fade-up pointer-events-auto parallax-img-4 z-20" 
-          style={{ top: H2 + 2, height: H3 - H2 - 4, left: `calc(${vLines[2]} + 2px)`, width: `calc(${vLines[3]} - ${vLines[2]} - 4px)` }}
+          className="absolute fade-up pointer-events-auto z-20" 
+          style={{ top: H2 + 30, height: 180, left: `calc(${vLines[2]} + 8px)`, width: `calc(${vLines[3]} - ${vLines[2]} - 8px)` }}
         >
-          <div className="relative w-full h-full overflow-hidden bg-[#EAECE6]">
-             <Image src="/images/hero-ribbon-photo.png" alt="Jewelry" fill className="object-cover mix-blend-multiply grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:mix-blend-normal" />
+          <div className="parallax-img-4 relative w-full h-full overflow-hidden bg-[#EAECE6]">
+             <Image src="/images/jewelry_necklace.png" alt="Jewelry" fill className="object-cover mix-blend-multiply grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:mix-blend-normal" />
           </div>
         </div>
 

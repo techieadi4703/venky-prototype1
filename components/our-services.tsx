@@ -42,78 +42,77 @@ export function OurServices() {
           
           {/* Folder Body (SVG) */}
           <div className="relative z-10 w-full aspect-[1.4] drop-shadow-2xl">
-            <svg viewBox="0 0 600 420" className="w-full h-full overflow-visible" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 600 420" className="w-full h-full overflow-visible drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="folderGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#2F2F2F" />
-                  <stop offset="100%" stopColor="#1B1B1B" />
+                  <stop offset="0%" stopColor="#2A2A2A" />
+                  <stop offset="100%" stopColor="#151515" />
                 </linearGradient>
                 <linearGradient id="backTabGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#222222" />
-                  <stop offset="100%" stopColor="#161616" />
+                  <stop offset="0%" stopColor="#1F1F1F" />
+                  <stop offset="100%" stopColor="#0F0F0F" />
                 </linearGradient>
+                <clipPath id="leftTabClip">
+                  <path d="M 280 40 L 310 10 Q 320 0 330 0 L 380 0 Q 390 0 400 10 L 430 40 Z" />
+                </clipPath>
+                <clipPath id="folderClip">
+                  <path d="M 0 60 Q 0 40 20 40 L 390 40 L 420 10 Q 430 0 440 0 L 490 0 Q 500 0 510 10 L 580 80 L 580 400 Q 580 420 560 420 L 20 420 Q 0 420 0 400 Z" />
+                </clipPath>
               </defs>
 
-              {/* Left Tab (Background) */}
+              {/* Left Tab Background */}
               <path 
-                d="M 170 40 L 210 0 L 290 0 L 330 40 Z" 
+                d="M 280 40 L 310 10 Q 320 0 330 0 L 380 0 Q 390 0 400 10 L 430 40 Z" 
                 fill="url(#backTabGrad)" 
               />
+              {/* Left Tab 3D Extrusion */}
               <path 
-                d="M 170 40 L 210 0 L 290 0 L 320 30" 
+                d="M 280 40 L 310 10 Q 320 0 330 0 L 380 0 Q 390 0 400 10 L 430 40" 
                 fill="none" 
-                stroke="rgba(255,255,255,0.08)" 
-                strokeWidth="2" 
-                strokeLinecap="round"
-                strokeLinejoin="round" 
+                stroke="#383838" 
+                strokeWidth="8" 
+                clipPath="url(#leftTabClip)"
               />
+              
               {/* Left Tab Cross */}
-              <g stroke="#000" strokeWidth="2.5" opacity="0.6" strokeLinecap="round">
-                <line x1="245" y1="15" x2="255" y2="25" />
-                <line x1="255" y1="15" x2="245" y2="25" />
+              <g stroke="#000" strokeWidth="2.5" opacity="0.8" strokeLinecap="round">
+                <line x1="350" y1="15" x2="360" y2="25" />
+                <line x1="360" y1="15" x2="350" y2="25" />
               </g>
 
               {/* Right Tab + Folder Body (Foreground) */}
               <path 
-                d="M 0 60 
-                   Q 0 40 20 40 
-                   L 260 40 
-                   L 300 0 
-                   L 390 0 
-                   L 430 40 
-                   L 530 40 
-                   L 580 90 
-                   L 580 400 
-                   Q 580 420 560 420 
-                   L 20 420 
-                   Q 0 420 0 400 
-                   Z" 
+                d="M 0 60 Q 0 40 20 40 L 390 40 L 420 10 Q 430 0 440 0 L 490 0 Q 500 0 510 10 L 580 80 L 580 400 Q 580 420 560 420 L 20 420 Q 0 420 0 400 Z" 
                 fill="url(#folderGrad)" 
-                stroke="#111"
-                strokeWidth="2"
-                strokeLinejoin="round"
               />
 
-              {/* Top Highlight Bevel */}
+              {/* Folder 3D Extrusion (Thick Bevel) */}
               <path 
-                d="M 5 60 Q 5 42 20 42 L 259 42 L 299 2 L 391 2 L 431 42 L 529 42 L 578 91" 
+                d="M 0 60 Q 0 40 20 40 L 390 40 L 420 10 Q 430 0 440 0 L 490 0 Q 500 0 510 10 L 580 80" 
                 fill="none" 
-                stroke="rgba(255,255,255,0.12)" 
-                strokeWidth="2.5" 
-                strokeLinecap="round"
-                strokeLinejoin="round" 
+                stroke="#4A4A4A" 
+                strokeWidth="12" 
+                clipPath="url(#folderClip)"
+              />
+              {/* Folder 3D Extrusion (Bright Highlight) */}
+              <path 
+                d="M 0 60 Q 0 40 20 40 L 390 40 L 420 10 Q 430 0 440 0 L 490 0 Q 500 0 510 10 L 580 80" 
+                fill="none" 
+                stroke="#666666" 
+                strokeWidth="4" 
+                clipPath="url(#folderClip)"
               />
 
               {/* Right Tab Cross */}
-              <g stroke="#000" strokeWidth="2.5" opacity="0.6" strokeLinecap="round">
-                <line x1="340" y1="15" x2="350" y2="25" />
-                <line x1="350" y1="15" x2="340" y2="25" />
+              <g stroke="#000" strokeWidth="2.5" opacity="0.8" strokeLinecap="round">
+                <line x1="460" y1="15" x2="470" y2="25" />
+                <line x1="470" y1="15" x2="460" y2="25" />
               </g>
             </svg>
 
             {/* Folder Text Overlay */}
             <div className="absolute inset-0 pt-10 flex flex-col items-center justify-center pointer-events-none">
-              <h3 className="font-bebas text-[#7C93A3] text-4xl md:text-[3.5rem] tracking-[0.1em] text-center opacity-90 drop-shadow-lg">
+              <h3 className="font-bebas text-[#7C93A3] text-4xl md:text-[3.5rem] tracking-[0.1em] text-center opacity-90" style={{ filter: 'drop-shadow(0px -1px 1px rgba(255,255,255,0.05)) drop-shadow(0px 3px 4px rgba(0,0,0,0.8))' }}>
                 {SERVICES[activeIndex].name === "PRE-PRESS" || SERVICES[activeIndex].name === "PRINTING" || SERVICES[activeIndex].name === "PHOTO EDITING" ? "OUR SERVICES" : SERVICES[activeIndex].name}
               </h3>
               <p className="sr-only">
