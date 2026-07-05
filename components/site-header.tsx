@@ -54,7 +54,7 @@ export function SiteHeader() {
           <div className="absolute top-1/2 -translate-y-1/2 flex items-center gap-16 md:gap-24 pointer-events-auto" style={{ left: 'calc(52% + 16px)' }}>
             <Link
               href="/"
-              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
+              className={`font-bebas text-[18px] md:text-[22px] tracking-[0.1em] transition-colors duration-200 ease-out ${
                 pathname === "/" ? "text-accent" : "text-rose hover:text-accent"
               }`}
             >
@@ -62,7 +62,7 @@ export function SiteHeader() {
             </Link>
             <Link
               href="/about"
-              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
+              className={`font-bebas text-[18px] md:text-[22px] tracking-[0.1em] transition-colors duration-200 ease-out ${
                 pathname === "/about" ? "text-accent" : "text-rose hover:text-accent"
               }`}
             >
@@ -74,7 +74,7 @@ export function SiteHeader() {
           <div className="absolute top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-auto" style={{ left: 'calc(74% + 16px)', right: 'calc(4% + 16px)' }}>
             <Link
               href="/work"
-              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
+              className={`font-bebas text-[18px] md:text-[22px] tracking-[0.1em] transition-colors duration-200 ease-out ${
                 pathname === "/work" ? "text-accent" : "text-rose hover:text-accent"
               }`}
             >
@@ -82,7 +82,7 @@ export function SiteHeader() {
             </Link>
             <Link
               href="/contact"
-              className={`font-bebas text-[15px] md:text-[17px] tracking-[0.1em] transition-colors duration-200 ease-out ${
+              className={`font-bebas text-[18px] md:text-[22px] tracking-[0.1em] transition-colors duration-200 ease-out ${
                 pathname === "/contact" ? "text-accent" : "text-rose hover:text-accent"
               }`}
             >

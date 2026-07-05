@@ -9,9 +9,8 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
   const verticalLines = ["16%", "52%", "74%", "96%"];
 
   // H-lines (in %)
-  const h1 = 12; // Below Header
-  const h2 = 32; // Above Headline
-  const h3 = 54; // Below Headline, Above CTA
+  const h1 = 15; // Below Header
+  const h3 = 41; // Below Headline, Above CTA
   const h4 = 66; // Below CTA
   const h5 = 85; // Bottom
 
@@ -72,8 +71,12 @@ export function GridOverlay({ onComplete }: { onComplete?: () => void }) {
           })}
 
           {/* === HORIZONTAL LINES (Double lines with 6px gap) === */}
-          {[h2, h3, h4, h5].map((h, i) => (
-            <g key={`h-${i}`}>
+          <g key="h-h3">
+            <line x1="0" y1={`calc(${h3}% - 3px)`} x2="74%" y2={`calc(${h3}% - 3px)`} />
+            <line x1="0" y1={`calc(${h3}% + 3px)`} x2="74%" y2={`calc(${h3}% + 3px)`} />
+          </g>
+          {[h4, h5].map((h, i) => (
+            <g key={`h-${i + 1}`}>
               <line x1="0" y1={`calc(${h}% - 3px)`} x2="100%" y2={`calc(${h}% - 3px)`} />
               <line x1="0" y1={`calc(${h}% + 3px)`} x2="100%" y2={`calc(${h}% + 3px)`} />
             </g>
