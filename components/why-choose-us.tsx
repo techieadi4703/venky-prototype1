@@ -40,7 +40,7 @@ export function WhyChooseUs() {
       const parallaxSpeeds = [
         { selector: ".parallax-img-1", y: 0, x: -300 }, // Top-left - moves LEFT
         { selector: ".parallax-img-2", y: -500, x: 0 }, // Top-right - moves UP
-        { selector: ".parallax-img-3", y: 400, x: 0 },  // Bottom-left - moves DOWN
+        { selector: ".parallax-img-3", y: 500, x: 0 },  // Bottom-left - moves DOWN
         { selector: ".parallax-img-4", y: 0, x: 300 },  // Bottom-right - moves RIGHT
       ];
 
