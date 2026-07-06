@@ -69,7 +69,7 @@ export function WhyChooseUs() {
   const H3 = 910;
 
   return (
-    <section 
+    <section
       ref={containerRef}
       className="w-full h-[1100px] relative bg-ink"
     >
@@ -79,7 +79,7 @@ export function WhyChooseUs() {
           {/* Horizontal Lines */}
           <line x1="0" y1={H1 - 5} x2={vLines[3]} y2={H1 - 5} />
           <line x1="0" y1={H1 + 5} x2={vLines[3]} y2={H1 + 5} />
-          
+
           <line x1={`calc(${vLines[1]} + 8px)`} y1={H2 - 5} x2={vLines[3]} y2={H2 - 5} />
           <line x1={`calc(${vLines[1]} + 8px)`} y1={H2 + 5} x2={vLines[3]} y2={H2 + 5} />
 
@@ -90,14 +90,14 @@ export function WhyChooseUs() {
             if (i === arr.length - 1) {
               return (
                 <g key={i}>
-                  <line x1={v} y1="0" x2={v} y2="100%" />
+                  <line x1={v} y1="100" x2={v} y2={H3} />
                 </g>
               );
             }
             return (
               <g key={i}>
-                <line x1={`calc(${v} - 8px)`} y1="0" x2={`calc(${v} - 8px)`} y2="100%" />
-                <line x1={`calc(${v} + 8px)`} y1="0" x2={`calc(${v} + 8px)`} y2="100%" />
+                <line x1={`calc(${v} - 8px)`} y1="100" x2={`calc(${v} - 8px)`} y2={H3} />
+                <line x1={`calc(${v} + 8px)`} y1="100" x2={`calc(${v} + 8px)`} y2={H3} />
               </g>
             );
           })}
@@ -106,10 +106,10 @@ export function WhyChooseUs() {
 
       {/* Content Container */}
       <div className="absolute inset-0 w-full h-full z-10 max-w-[1440px] mx-auto pointer-events-none">
-        
+
         {/* Title */}
-        <div 
-          className="absolute flex items-end justify-center pb-6 fade-up pointer-events-auto" 
+        <div
+          className="absolute flex items-end justify-center pb-6 fade-up pointer-events-auto"
           style={{ top: 0, height: H1 - 5, left: 0, width: `calc(${vLines[1]} - 8px)` }}
         >
           <h2 className="font-bebas text-bone text-4xl md:text-[3rem] tracking-wide uppercase">
@@ -118,8 +118,8 @@ export function WhyChooseUs() {
         </div>
 
         {/* Reasons (All 4 paragraphs) */}
-        <div 
-          className="absolute flex flex-col pt-24 gap-y-16 px-8 lg:px-16 md:pl-[max(6vw,24px)] fade-up pointer-events-auto" 
+        <div
+          className="absolute flex flex-col pt-24 gap-y-16 px-8 lg:px-16 md:pl-[max(6vw,24px)] fade-up pointer-events-auto"
           style={{ top: H1, left: 0, width: `calc(${vLines[1]} - 8px)` }}
         >
           <div className="grid grid-cols-2 gap-x-12 w-full">
@@ -142,42 +142,42 @@ export function WhyChooseUs() {
 
         {/* Images */}
         {/* BBQ - top left (V1-V2) */}
-        <div 
-          className="absolute fade-up pointer-events-auto z-20" 
+        <div
+          className="absolute fade-up pointer-events-auto z-20"
           style={{ top: 250, height: 220, left: `calc(${vLines[1]} - 8px)`, width: `calc(${vLines[2]} - ${vLines[1]})` }}
         >
           <div className="parallax-img-1 relative w-full h-full overflow-hidden">
-             <Image src="/images/hero-ribbon-photo.png" alt="BBQ" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
+            <Image src="/images/hero-ribbon-photo.png" alt="BBQ" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
           </div>
         </div>
 
         {/* Qubz - top right (V2-V3) */}
-        <div 
-          className="absolute fade-up pointer-events-auto z-20" 
+        <div
+          className="absolute fade-up pointer-events-auto z-20"
           style={{ top: 250, height: 380, left: `calc(${vLines[2]} + 8px)`, width: `calc(${vLines[3]} - ${vLines[2]} - 8px)` }}
         >
           <div className="parallax-img-2 relative w-full h-full overflow-hidden">
-             <Image src="/images/hero-ribbon-photo.png" alt="Qubz" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
+            <Image src="/images/hero-ribbon-photo.png" alt="Qubz" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
           </div>
         </div>
 
         {/* Sari - bottom left (V1-V2) */}
-        <div 
-          className="absolute fade-up pointer-events-auto z-20 overflow-hidden" 
+        <div
+          className="absolute fade-up pointer-events-auto z-20 overflow-hidden"
           style={{ top: H1 + 230, height: H3 - (H1 + 230), left: `calc(${vLines[1]} - 8px)`, width: `calc(${vLines[2]} - ${vLines[1]})` }}
         >
           <div className="parallax-img-3 relative w-full overflow-hidden" style={{ height: 280 }}>
-             <Image src="/images/woman_saree.png" alt="Sari" fill className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
+            <Image src="/images/woman_saree.png" alt="Sari" fill className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
           </div>
         </div>
 
         {/* Jewelry - bottom right (V2-V3) */}
-        <div 
-          className="absolute fade-up pointer-events-auto z-20" 
+        <div
+          className="absolute fade-up pointer-events-auto z-20"
           style={{ top: H2 + 30, height: 180, left: `calc(${vLines[2]} + 8px)`, width: `calc(${vLines[3]} - ${vLines[2]} - 8px)` }}
         >
           <div className="parallax-img-4 relative w-full h-full overflow-hidden bg-[#EAECE6]">
-             <Image src="/images/jewelry_necklace.png" alt="Jewelry" fill className="object-cover mix-blend-multiply grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:mix-blend-normal" />
+            <Image src="/images/jewelry_necklace.png" alt="Jewelry" fill className="object-cover mix-blend-multiply grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer hover:mix-blend-normal" />
           </div>
         </div>
 
