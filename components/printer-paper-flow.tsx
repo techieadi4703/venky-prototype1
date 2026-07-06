@@ -35,11 +35,12 @@ const PRINTER_H = PRINTER.w / PRINTER_ASPECT;
 // { x, y, w } — w is the paper width (grows as it comes toward the viewer).
 const CTRL = [
   { x: 1238, y: 604, w: 58 }, // inside the slot
-  { x: 1156, y: 660, w: 70 }, // drops faster
-  { x: 1026, y: 720, w: 90 }, // steeper drop
-  { x: 856, y: 760, w: 120 }, // getting near bottom
-  { x: 626, y: 780, w: 160 }, // absolute lowest point
-  { x: 376, y: 740, w: 200 }, // starting to go up
+  { x: 1238, y: 680, w: 65 }, // drops straight down vertically
+  { x: 1180, y: 740, w: 80 }, // starts curving left
+  { x: 1050, y: 770, w: 100 }, // swinging left
+  { x: 856, y: 785, w: 130 }, // near bottom
+  { x: 626, y: 795, w: 160 }, // absolute lowest point
+  { x: 376, y: 750, w: 200 }, // starting to go up
   { x: 126, y: 640, w: 250 }, // going up steeply
   { x: -124, y: 480, w: 310 },
   { x: -374, y: 250, w: 380 },
@@ -128,8 +129,8 @@ function pointAt(u: number) {
 }
 
 // ---- Sheet tuning -------------------------------------------------------
-const SHEET_H0 = 150; // baked sheet height (paper width at scale 1)
-const SHEET_L0 = 178; // Restored to natural photo aspect ratio so height is full
+const SHEET_L0 = 150; // baked sheet width
+const SHEET_H0 = 210; // portrait paper height
 const TARGET_D = 140; // Exact spacing for guaranteed continuous overlap
 const N = Math.round(PATH_U_LEN / TARGET_D);
 const D = PATH_U_LEN / N; // exact spacing to make the loop perfectly seamless
@@ -150,13 +151,12 @@ const PHOTOS = [
 const QUEUE_LINES = 8;
 
 function sheetTransform(u: number, k: number, p: { x: number, y: number, w: number, dx: number, dy: number, cum: number }) {
-  const scale = p.w / SHEET_H0;
-  const ang = (Math.atan2(p.dy, p.dx) * 180) / Math.PI;
+  const scale = p.w / SHEET_L0;
 
   const progress = p.cum / PATH_LEN;
   const rotY = -60 * progress; // Creates the trapezoid (broader one end, narrower on other)
 
-  return `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) perspective(1200px) scale(${scale.toFixed(3)}) rotateZ(${(ang + 180).toFixed(1)}deg) rotateY(${rotY.toFixed(1)}deg)`;
+  return `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) perspective(1200px) scale(${scale.toFixed(3)}) rotateY(${rotY.toFixed(1)}deg)`;
 }
 
 export function PrinterPaperFlow() {
@@ -262,7 +262,7 @@ export function PrinterPaperFlow() {
             </filter>
             {/* Clip path to hide the part of the ribbon that is "inside" the printer */}
             <clipPath id="printer-slot-clip">
-              <polygon points="-2000,-1000 1126,-1000 1126,600 1238,600 1238,3000 -2000,3000" />
+              <polygon points="-2000,-1000 1126,-1000 1126,604 3000,604 3000,3000 -2000,3000" />
             </clipPath>
           </defs>
 
@@ -363,7 +363,7 @@ export function PrinterPaperFlow() {
                     id={`poly-flap-${k}`}
                     points={flapPoints}
                     fill="#e0d8d0"
-                    opacity={F > 1 ? 1 : 0}
+                    opacity={Number(F) > 1 ? 1 : 0}
                   />
                 </g>
               );
