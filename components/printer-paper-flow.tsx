@@ -310,9 +310,16 @@ export function PrinterPaperFlow() {
               if (progress > 0.1 && progress < 0.9) {
                 foldAmt = Math.sin(((progress - 0.1) / 0.8) * Math.PI);
               }
-              const F = 50 * foldAmt;
-              const clipPoints = `${-L / 2},${-H / 2} ${L / 2 - F},${-H / 2} ${L / 2},${-H / 2 + F} ${L / 2},${H / 2} ${-L / 2},${H / 2}`;
-              const flapPoints = `${L / 2 - F},${-H / 2} ${L / 2},${-H / 2 + F} ${L / 2 - F},${-H / 2 + F}`;
+              const F = (50 * foldAmt).toFixed(2);
+              const L2 = (L / 2).toFixed(2);
+              const nL2 = (-L / 2).toFixed(2);
+              const H2 = (H / 2).toFixed(2);
+              const nH2 = (-H / 2).toFixed(2);
+              const L2_minus_F = (L / 2 - (50 * foldAmt)).toFixed(2);
+              const nH2_plus_F = (-H / 2 + (50 * foldAmt)).toFixed(2);
+
+              const clipPoints = `${nL2},${nH2} ${L2_minus_F},${nH2} ${L2},${nH2_plus_F} ${L2},${H2} ${nL2},${H2}`;
+              const flapPoints = `${L2_minus_F},${nH2} ${L2},${nH2_plus_F} ${L2_minus_F},${nH2_plus_F}`;
 
               return (
                 <g
