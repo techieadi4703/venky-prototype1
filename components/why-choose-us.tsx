@@ -40,7 +40,7 @@ export function WhyChooseUs() {
       const parallaxSpeeds = [
         { selector: ".parallax-img-1", y: 0, x: -300 }, // Top-left - moves LEFT
         { selector: ".parallax-img-2", y: -500, x: 0 }, // Top-right - moves UP
-        { selector: ".parallax-img-3", y: 100, x: 0 },  // Bottom-left - moves DOWN (max 100 to not cross H3)
+        { selector: ".parallax-img-3", y: 400, x: 0 },  // Bottom-left - moves DOWN
         { selector: ".parallax-img-4", y: 0, x: 300 },  // Bottom-right - moves RIGHT
       ];
 
@@ -163,10 +163,10 @@ export function WhyChooseUs() {
 
         {/* Sari - bottom left (V1-V2) */}
         <div 
-          className="absolute fade-up pointer-events-auto z-20" 
-          style={{ top: H1 + 230, height: 280, left: `calc(${vLines[1]} - 8px)`, width: `calc(${vLines[2]} - ${vLines[1]})` }}
+          className="absolute fade-up pointer-events-auto z-20 overflow-hidden" 
+          style={{ top: H1 + 230, height: H3 - (H1 + 230), left: `calc(${vLines[1]} - 8px)`, width: `calc(${vLines[2]} - ${vLines[1]})` }}
         >
-          <div className="parallax-img-3 relative w-full h-full overflow-hidden">
+          <div className="parallax-img-3 relative w-full overflow-hidden" style={{ height: 280 }}>
              <Image src="/images/woman_saree.png" alt="Sari" fill className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer" />
           </div>
         </div>
