@@ -6,12 +6,12 @@ import { useGSAP } from "@gsap/react";
 
 const NODES = [
   { id: "client-brief", label: "client brief", x: 150, y: 200, isPill: true },
-  { id: "internal-brief", label: "internal brief", x: 250, y: 100, isPill: false },
+  { id: "internal-brief", label: "internal brief", x: 300, y: 100, isPill: false },
   { id: "estimation", label: "estimation", x: 525, y: 100, isPill: false },
-  { id: "retouching", label: "retouching/adapting", x: 800, y: 100, isPill: false },
-  { id: "internal-approval", label: "internal approval/quality check", x: 800, y: 300, isPill: false },
+  { id: "retouching", label: "retouching/adapting", x: 750, y: 100, isPill: false },
+  { id: "internal-approval", label: "internal approval/quality check", x: 750, y: 300, isPill: false },
   { id: "correction", label: "correction", x: 525, y: 300, isPill: false },
-  { id: "client-approval", label: "client approval", x: 250, y: 300, isPill: false },
+  { id: "client-approval", label: "client approval", x: 300, y: 300, isPill: false },
 ];
 
 export function OurProcess() {
@@ -51,7 +51,7 @@ export function OurProcess() {
         </h2>
       </div>
 
-      <div ref={containerRef} className="relative w-full aspect-[2/1] md:aspect-[2.5/1] max-w-5xl mx-auto">
+      <div ref={containerRef} className="relative w-full aspect-[2/1] md:aspect-[2.5/1] max-w-7xl mx-auto">
 
         {/* SVG Track and Connector Lines */}
         <svg
@@ -62,7 +62,7 @@ export function OurProcess() {
           {/* Main Track */}
           <path
             className="process-track"
-            d="M 150 200 A 100 100 0 0 1 250 100 L 800 100 A 100 100 0 0 1 800 300 L 250 300"
+            d="M 150 200 A 100 100 0 0 1 250 100 L 800 100 A 100 100 0 0 1 800 300 L 300 300"
             fill="none"
             stroke="#4A4A4A"
             strokeWidth="2"
@@ -71,15 +71,22 @@ export function OurProcess() {
 
           {/* Vertical Connectors */}
           {NODES.map((node) => (
-            <line
-              key={`line-${node.id}`}
-              x1={node.x}
-              y1={node.y}
-              x2={node.x}
-              y2={node.y + 40}
-              stroke="#4A4A4A"
-              strokeWidth="2"
-            />
+            <g key={`connector-${node.id}`}>
+              <line
+                x1={node.x}
+                y1={node.y}
+                x2={node.x}
+                y2={node.y + 60}
+                stroke="#4A4A4A"
+                strokeWidth="2"
+              />
+              <circle
+                cx={node.x}
+                cy={node.y + 60}
+                r="4"
+                fill="#4A4A4A"
+              />
+            </g>
           ))}
         </svg>
 
@@ -102,7 +109,7 @@ export function OurProcess() {
             >
               {/* Expanding Circle / Pill */}
               <div
-                className={`flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] overflow-hidden shadow-lg ${isHovered ? "bg-accent scale-[3]" : "bg-[#4A4A4A] scale-100"
+                className={`flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] overflow-hidden shadow-lg ${isHovered ? "bg-accent scale-[4]" : "bg-[#4A4A4A] scale-100"
                   } ${node.isPill ? (isHovered ? "w-8 h-8 rounded-full" : "w-16 h-8 rounded-full") : "w-8 h-8 rounded-full"}`}
               >
                 {/* Illustration (Visible on hover) */}
@@ -120,10 +127,10 @@ export function OurProcess() {
 
               {/* Label */}
               <div
-                className="absolute text-center pointer-events-none w-48"
-                style={{ top: '60px' }} // 40px for line + 20px padding
+                className="absolute text-center pointer-events-none whitespace-nowrap"
+                style={{ top: '110px' }} // Adjusted for more margin top
               >
-                <span className="font-bebas text-[#7C93A3] text-sm md:text-lg tracking-widest uppercase opacity-80">
+                <span className="font-oswald text-[#7C93A3] text-sm md:text-lg tracking-wide opacity-80">
                   {node.label}
                 </span>
               </div>
